@@ -1,0 +1,62 @@
+[gd_scene load_steps=4 format=3 uid="uid://cvd05bb1vcgvw"]
+
+[ext_resource type="Texture2D" uid="uid://61yd0ak0m8rp" path="res://art/fonts/play_button.png" id="1_1rerr"]
+[ext_resource type="Script" uid="uid://dnkobvvaiaoi4" path="res://scripts/menu.gd" id="1_xhh6f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rerr"]
+bg_color = Color(0.26623696, 0.2076514, 0.21783775, 1)
+skew = Vector2(-0.128, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.28235295, 0.28235295, 0.28235295, 0.78039217)
+corner_radius_top_left = 15
+corner_radius_top_right = 15
+corner_radius_bottom_right = 15
+corner_radius_bottom_left = 15
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_xhh6f")
+
+[node name="Fade" type="ColorRect" parent="."]
+z_index = 1
+offset_right = 300.0
+offset_bottom = 150.0
+color = Color(0, 0, 0, 1)
+
+[node name="Panel" type="Panel" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 105.0
+offset_top = 50.0
+offset_right = 195.00015
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_1rerr")
+
+[node name="play" type="Button" parent="Panel"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -46.0
+offset_top = -26.5
+offset_right = 46.0
+offset_bottom = 26.5
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 0
+icon = ExtResource("1_1rerr")
+flat = true
+
+[connection signal="button_down" from="Panel/play" to="." method="_on_play_button_down"]
+[connection signal="button_up" from="Panel/play" to="." method="_on_play_button_up"]
+[connection signal="pressed" from="Panel/play" to="." method="_on_play_pressed"]

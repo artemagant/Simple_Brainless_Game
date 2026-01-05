@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://li85w5026c1i"]
+
+[ext_resource type="Script" uid="uid://ceqej4rdw3atv" path="res://scripts/main.gd" id="1_jjgbg"]
+[ext_resource type="PackedScene" uid="uid://8nh8ibn5bou2" path="res://Scenes/levels/level_1.tscn" id="2_bo1nx"]
+
+[node name="Root" type="Node2D"]
+script = ExtResource("1_jjgbg")
+
+[node name="Fade" type="ColorRect" parent="."]
+visible = false
+z_index = 1
+offset_right = 300.0
+offset_bottom = 150.0
+color = Color(0, 0, 0, 1)
+
+[node name="level_root" parent="." instance=ExtResource("2_bo1nx")]
