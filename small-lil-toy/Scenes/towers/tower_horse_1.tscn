@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://bvufkc5cdjq0d"]
+
+[ext_resource type="Script" uid="uid://dbu8d3lhrcprh" path="res://scripts/tower_horse_1.gd" id="1_cfynb"]
+[ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_tm0en"]
+[ext_resource type="Texture2D" uid="uid://yv6tpe3wj1rv" path="res://art/Towers/horse/Tower_Horse_idle_1.png" id="3_ky71j"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ky71j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_ky71j")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cfynb"]
+radius = 18.0
+
+[node name="Tower_Horse_1" instance=ExtResource("1_tm0en")]
+script = ExtResource("1_cfynb")
+
+[node name="Top" parent="." index="1"]
+sprite_frames = SubResource("SpriteFrames_ky71j")
+
+[node name="CollisionShape2D" parent="Enemy_Detection_Area" index="0"]
+shape = SubResource("CircleShape2D_cfynb")
+debug_color = Color(0.9411765, 0.9882353, 1, 0.27450982)

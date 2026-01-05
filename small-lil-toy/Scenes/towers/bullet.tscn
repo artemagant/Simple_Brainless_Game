@@ -1,0 +1,59 @@
+[gd_scene load_steps=10 format=3 uid="uid://bvwkh8jw4xncg"]
+
+[ext_resource type="Script" uid="uid://bhqj66rx1ct55" path="res://scripts/bullet.gd" id="1_7sqa8"]
+[ext_resource type="Texture2D" uid="uid://clvmhxvuac6yv" path="res://art/Towers/soldier_gun/Bullet_Tower_Soldier.png" id="1_iaf6n"]
+[ext_resource type="Texture2D" uid="uid://g1ddyof6sc6s" path="res://art/boom_animation/boom_1.png" id="2_0hd2h"]
+[ext_resource type="Texture2D" uid="uid://cpg57e44fj1tx" path="res://art/boom_animation/boom_2.png" id="3_drcnx"]
+[ext_resource type="Texture2D" uid="uid://77wjrkeiucm7" path="res://art/boom_animation/boom_3.png" id="4_1nwl1"]
+[ext_resource type="Texture2D" uid="uid://clck8r87tj16d" path="res://art/boom_animation/boom_4.png" id="5_he7mj"]
+[ext_resource type="Texture2D" uid="uid://d2xo1b7ptb03a" path="res://art/boom_animation/boom_5.png" id="6_cklue"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gko7o"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_0hd2h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_drcnx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_1nwl1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_he7mj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_cklue")
+}],
+"loop": true,
+"name": &"Boom",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_iaf6n")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7sqa8"]
+size = Vector2(4, 4)
+
+[node name="Bullet" type="Area2D"]
+scale = Vector2(1.2, 1.2)
+collision_layer = 2
+script = ExtResource("1_7sqa8")
+
+[node name="Sprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_gko7o")
+animation = &"Boom"
+autoplay = "default"
+frame_progress = 0.9095653
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7sqa8")
+debug_color = Color(0.8392157, 0.38431373, 0.047058824, 0)

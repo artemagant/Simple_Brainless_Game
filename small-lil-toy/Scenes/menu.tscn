@@ -21,9 +21,9 @@ script = ExtResource("1_xhh6f")
 
 [node name="Fade" type="ColorRect" parent="."]
 z_index = 1
-offset_right = 300.0
-offset_bottom = 150.0
-color = Color(0, 0, 0, 1)
+offset_right = 320.0
+offset_bottom = 192.0
+color = Color(0, 0, 0, 0)
 
 [node name="Panel" type="Panel" parent="."]
 anchors_preset = 8

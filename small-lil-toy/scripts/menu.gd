@@ -4,6 +4,7 @@ extends Node2D
 @onready var fade_rect = $Fade
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	fade_rect.modulate.a = 1.0
 	fade(0.0)
 
 

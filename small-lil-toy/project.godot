@@ -11,14 +11,18 @@ config_version=5
 [application]
 
 config/name="Small lil Toy"
-run/main_scene="uid://cvd05bb1vcgvw"
+run/main_scene="uid://li85w5026c1i"
 config/features=PackedStringArray("4.5", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Data="*res://scripts/Data.gd"
+
 [display]
 
-window/size/viewport_width=300
-window/size/viewport_height=150
+window/size/viewport_width=320
+window/size/viewport_height=192
 window/stretch/mode="viewport"
 
 [input]
