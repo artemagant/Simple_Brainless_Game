@@ -9,14 +9,19 @@ var bullet_scene := preload("res://Scenes/towers/bullet.tscn")
 func _ready() -> void:
 	_on_button_pouse_pressed()
 	# Change the wave panel size from current wave number, because idk
-	Wave_Counter_Number.text = str(Data. wave)
-	Wave_Counter_Panel.size.x = 48 + Wave_Counter_Number.size.x
+	
+	Wave_Counter_Panel.size.x = Wave_Counter_Number.size.x
+	$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+	Data. speed_variation = 0
+	previous_speed = 5
 	RenderingServer. set_default_clear_color("37213B")
 	start_wave(Data. wave)
 	$Towers/Tower_soldier_gun.connect("shoot", create_bullet)
 	$Towers/Tower_soldier_gun2.connect("shoot", create_bullet)
 func _process(_delta: float) -> void:
+	# Update every labels, that needs in it
 	$HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter/CenterContainer/Label.text = str(Data. speed_multiplayer) + "x"
+	Wave_Counter_Number.text = "wave: " + str(int(Data. wave))
 
 func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	# idk wthitt, but I trust the guide guy
@@ -26,12 +31,14 @@ func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	$Bullets.add_child(bullet)
 
 func start_wave(wave):
-	var wavee
+	var wavee:Array
 	# Take the wave content from current wave
 	if wave == 1:
-		wavee = Data. wave_content_level_1.wave_1
+		wavee = Data.wave_content_level_1.wave_1.duplicate()
 	elif wave == 2:
-		wavee = Data. wave_content_level_1.wave_2
+		wavee = Data. wave_content_level_1.wave_2.duplicate()
+	elif wave == 3:
+		wavee = Data. wave_content_level_1.wave_3.duplicate()
 	else:
 		return
 	# Spawn enemys
@@ -40,7 +47,7 @@ func start_wave(wave):
 		if wavee[0] is int:
 			# Spawn enemy of it's type
 			if wavee[0] == 1:
-				Data. enemys += 1
+				
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
 				var enemy = first_enemy_scene.instantiate()
@@ -71,16 +78,20 @@ func start_wave(wave):
 	
 	# Wait until all of the enemys dyed
 	while true:
-		if Data. enemys <= 0:
+		if Data. enemys < 0:
 			Data. wave += 1
+			Data. save()
+			if Data. speed_variation != 0:
+				previous_speed = Data. speed_variation
+				Data. speed_variation = 0
+				$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
 			break
 		else:
 			await get_tree().create_timer(0.1).timeout
 	# After wave we call the function, that call this function again, but with little delay 
 	wave_couldown()
 func wave_couldown():
-	# Again change the wave number panel after wave number changes
-	Wave_Counter_Number.text = str(Data. wave)
+	# Couldown between waves
 	await get_tree().create_timer(1.0).timeout
 	start_wave(Data. wave)
 
@@ -104,6 +115,8 @@ func _on_button_pressed() -> void:
 # This button pause and unpause game
 var previous_speed
 func _on_button_pouse_pressed() -> void:
+	if settings:
+		return
 	if Data. speed_variation != 0:
 		previous_speed = Data. speed_variation
 		Data. speed_variation = 0
@@ -122,3 +135,28 @@ func _on_button_slow_down_pressed() -> void:
 func _on_button_speed_up_pressed() -> void:
 	if Data. speed_variation != 0 and Data. speed_variation < 10:
 		Data. speed_variation += 1
+
+
+
+# Turn on settings panel
+var settings = false
+func _on_button_settings_pressed() -> void:
+	if settings:
+		return
+	settings = true
+	$HUD/Settings. visible = true
+	if Data. speed_variation != 0:
+		previous_speed = Data. speed_variation
+		Data. speed_variation = 0
+		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+
+# Return in the menu
+func _on_button_return_to_the_menu_pressed() -> void:
+	Data. save()
+	get_tree().call_deferred("change_scene_to_file", "res://Scenes/menu.tscn")
+
+# Turn off settings panel
+func _on_button_close_settings_pressed() -> void:
+	if settings:
+		settings = false
+		$HUD/Settings. visible = false

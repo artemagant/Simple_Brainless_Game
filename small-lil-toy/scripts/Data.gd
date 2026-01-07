@@ -4,9 +4,13 @@ enum Bullet {SIGNAL, FIRE, MORTAR_EXPLOSION}
 
 # Varyebles, that I need in different spots, and something from this I will save
 var wave = 1
+var record_wave = 0
 var enemys = 0
 var speed_multiplayer = 1
 var speed_variation = 5
+var player_health = 75
+var money = 150
+var money_multiplayer = 5.0
 
 func _process(_delta: float) -> void:
 	if speed_variation == 0:
@@ -35,7 +39,68 @@ func _process(_delta: float) -> void:
 		speed_multiplayer = 1.0
 
 # Every wave content for levels
-var wave_content_level_1 = {
+const wave_content_level_1 = {
 	"wave_1": [1, 3.0, 1, 3.0, 1, 3.0, 1, 3.0, 1, 2.5, 1, 2.0, 1, 1.0, 1, 1.0],
-	"wave_2": [1, 2.0, 2, 2.0, 1, 1.5, 2, 1.5, 1, 1.0, 2, 0.5, 2, 0.5, 1, 0.5, 1, 0.5]
+	"wave_2": [1, 2.0, 2, 2.0, 1, 1.5, 2, 1.5, 1, 1.0, 2, 1.0, 2, 1.0, 1, 1.0, 1, 1.0],
+	"wave_3": [1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.5,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,1,0.1,]
 }
+
+
+#
+# saving system
+#
+const PATH_TO_SAVE_FILE = "user://savegame.save" # Save Path
+
+func save(): # Function game save
+	var save_file = FileAccess. open(PATH_TO_SAVE_FILE, FileAccess.WRITE)
+	if save_file == null:
+		print_debug("Error on loading files")
+		return
+	
+	var game_data = { # Every Varyebles, that I will save
+		"wave": wave, 
+		"record_wave": record_wave,
+	#	"player_health": player_health,
+		"money": money,
+		"money_multiplayer": money_multiplayer,
+		
+	}
+	var json_string = JSON. stringify(game_data)
+	save_file.store_line(json_string)
+	save_file.close()
+func load_game():
+	if not FileAccess. file_exists(PATH_TO_SAVE_FILE):
+		return false
+	
+	var save_file = FileAccess. open(PATH_TO_SAVE_FILE, FileAccess. READ)
+	if save_file == null:
+		print_debug("Error on loading files")
+		return
+	
+	var json_string = save_file.get_line()
+	save_file.close()
+	
+	var json = JSON. new()
+	var parse_result = json. parse(json_string)
+	
+	if parse_result != OK:
+		print("Ошибка паркинга JSON файла")
+		return false
+	
+	var data = json. data
+	
+	#
+	# get data
+	#
+	wave = data. get("wave", 1)
+	record_wave = data. get("record_wave", 0)
+	#player_health = data. get("player_health", 75)
+	money = data. get("money", 150)
+	money_multiplayer = data. get("money_multiplayer", 5.0)
+
+func reset_game():
+	wave = 1
+	money = 1
+	money_multiplayer = 1
+	player_health = 75
+	save()

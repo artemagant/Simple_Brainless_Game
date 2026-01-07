@@ -42,7 +42,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
 size = Vector2(3.2000005, 4.800001)
 
-[node name="Enemy_car_1" type="Area2D"]
+[node name="Enemy_car_2" type="Area2D"]
 texture_filter = 1
 rotation = 1.5707964
 scale = Vector2(2.5, 4)
