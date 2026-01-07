@@ -1,30 +1,30 @@
-[gd_scene load_steps=10 format=3 uid="uid://38spvp7x478b"]
+[gd_scene load_steps=10 format=3 uid="uid://6ouefo8jft0d"]
 
-[ext_resource type="Script" uid="uid://cwixmy2vjq6j2" path="res://scripts/enemy_car_1.gd" id="1_jv1oi"]
-[ext_resource type="Texture2D" uid="uid://bc06hscmnfgvg" path="res://art/Enemys/Enemy_car/Enemy_car_1_walk_1.png" id="2_jv1oi"]
-[ext_resource type="Texture2D" uid="uid://g1ddyof6sc6s" path="res://art/boom_animation/boom_1.png" id="2_lh1uj"]
-[ext_resource type="Texture2D" uid="uid://cpg57e44fj1tx" path="res://art/boom_animation/boom_2.png" id="3_1gdsr"]
-[ext_resource type="Texture2D" uid="uid://77wjrkeiucm7" path="res://art/boom_animation/boom_3.png" id="4_5bn6w"]
-[ext_resource type="Texture2D" uid="uid://clck8r87tj16d" path="res://art/boom_animation/boom_4.png" id="5_2o848"]
-[ext_resource type="Texture2D" uid="uid://d2xo1b7ptb03a" path="res://art/boom_animation/boom_5.png" id="6_fn425"]
+[ext_resource type="Script" uid="uid://b75bwq3jha4k1" path="res://scripts/enemy_car_2.gd" id="1_6ybbm"]
+[ext_resource type="Texture2D" uid="uid://g1ddyof6sc6s" path="res://art/boom_animation/boom_1.png" id="2_c76mb"]
+[ext_resource type="Texture2D" uid="uid://cpg57e44fj1tx" path="res://art/boom_animation/boom_2.png" id="3_160lo"]
+[ext_resource type="Texture2D" uid="uid://77wjrkeiucm7" path="res://art/boom_animation/boom_3.png" id="4_66rsm"]
+[ext_resource type="Texture2D" uid="uid://clck8r87tj16d" path="res://art/boom_animation/boom_4.png" id="5_6fkui"]
+[ext_resource type="Texture2D" uid="uid://d2xo1b7ptb03a" path="res://art/boom_animation/boom_5.png" id="6_h5abe"]
+[ext_resource type="Texture2D" uid="uid://cd5n4boagkjb1" path="res://art/Enemys/Enemy_car/Enemy_car_2_walk_1.png" id="7_6ybbm"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_v0iea"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_lh1uj")
+"texture": ExtResource("2_c76mb")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_1gdsr")
+"texture": ExtResource("3_160lo")
 }, {
 "duration": 1.0,
-"texture": ExtResource("4_5bn6w")
+"texture": ExtResource("4_66rsm")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_2o848")
+"texture": ExtResource("5_6fkui")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_fn425")
+"texture": ExtResource("6_h5abe")
 }],
 "loop": true,
 "name": &"Boom",
@@ -32,7 +32,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_jv1oi")
+"texture": ExtResource("7_6ybbm")
 }],
 "loop": true,
 "name": &"walk",
@@ -47,23 +47,23 @@ texture_filter = 1
 rotation = 1.5707964
 scale = Vector2(2.5, 4)
 collision_mask = 2
-script = ExtResource("1_jv1oi")
+script = ExtResource("1_6ybbm")
 metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(0.175, 0.175)
 sprite_frames = SubResource("SpriteFrames_v0iea")
-animation = &"Boom"
+animation = &"walk"
 autoplay = "walk"
-frame_progress = 0.19734319
+frame_progress = 0.064117275
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-4.1326395e-08, 9.536742e-08)
 scale = Vector2(0.99999976, 0.99999976)
 shape = SubResource("RectangleShape2D_cvnsp")
 one_way_collision_margin = 128.0
-debug_color = Color(0.80784315, 0.13333334, 0, 0.5058824)
+debug_color = Color(0.80784315, 0.13333334, 0, 0)
 
 [connection signal="area_entered" from="." to="." method="_on_area_entered"]
 [connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]

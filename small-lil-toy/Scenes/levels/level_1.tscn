@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://8nh8ibn5bou2"]
+[gd_scene load_steps=20 format=4 uid="uid://8nh8ibn5bou2"]
 
 [ext_resource type="Script" uid="uid://c00572iwly3hf" path="res://scripts/level_1.gd" id="1_mkwgf"]
 [ext_resource type="Texture2D" uid="uid://c2lwx7a67g8ys" path="res://art/TileSets/TileSet_Level_1.png" id="2_cru1l"]
@@ -6,6 +6,10 @@
 [ext_resource type="PackedScene" uid="uid://c3hsihfym3j3p" path="res://Scenes/towers/tower_soldier_gun.tscn" id="3_yffda"]
 [ext_resource type="PackedScene" uid="uid://4fsqgch4mfw" path="res://Scenes/ui/player_camera.tscn" id="5_0lml3"]
 [ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="6_qyddi"]
+[ext_resource type="Texture2D" uid="uid://cb82xjgti2sae" path="res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon.png" id="7_qek6e"]
+[ext_resource type="Texture2D" uid="uid://bucnao6o1u6ln" path="res://art/Another Different Stuff/Slow_Down.png" id="7_tlryv"]
+[ext_resource type="Texture2D" uid="uid://bexlns32s6ia6" path="res://art/Another Different Stuff/Speed_Up.png" id="8_dsuda"]
+[ext_resource type="Texture2D" uid="uid://7rwiuoc0hebd" path="res://art/Another Different Stuff/Play.png" id="8_s5b24"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0lml3"]
 texture = ExtResource("2_cru1l")
@@ -54,6 +58,56 @@ _data = {
 }
 point_count = 6
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qyddi"]
+bg_color = Color(0, 0, 0, 0.5882353)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.7058824)
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qek6e"]
+bg_color = Color(0, 0, 0, 0.5882353)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0, 0, 0, 0.7058824)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s5b24"]
+bg_color = Color(0, 0, 0, 0.5882353)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 0.6666667)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tlryv"]
+bg_color = Color(1, 1, 1, 0.34901962)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qyddi"]
+size = Vector2(348.021, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qek6e"]
+size = Vector2(17, 277)
+
 [node name="level_root" type="Node2D"]
 script = ExtResource("1_mkwgf")
 
@@ -73,10 +127,13 @@ curve = SubResource("Curve2D_f5o0x")
 [node name="Towers" type="Node2D" parent="."]
 
 [node name="Tower_Horse_1" parent="Towers" instance=ExtResource("3_cru1l")]
-position = Vector2(108, 50)
+position = Vector2(5, 154)
 
 [node name="Tower_soldier_gun" parent="Towers" instance=ExtResource("3_yffda")]
-position = Vector2(78, 59)
+position = Vector2(60, 197)
+
+[node name="Tower_soldier_gun2" parent="Towers" instance=ExtResource("3_yffda")]
+position = Vector2(53, 140)
 
 [node name="Bullets" type="Node2D" parent="."]
 
@@ -111,4 +168,141 @@ offset_bottom = 21.638
 texture_filter = 1
 layout_mode = 2
 theme_override_fonts/font = ExtResource("6_qyddi")
-text = "1"
+
+[node name="game_need" type="CanvasLayer" parent="HUD"]
+offset = Vector2(-5, 0)
+transform = Transform2D(1, 0, 0, 1, -5, 0)
+
+[node name="Towers_Manager" type="Panel" parent="HUD/game_need"]
+offset_left = 320.0
+offset_right = 400.0
+offset_bottom = 192.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qyddi")
+
+[node name="GameControl_Buttons" type="Panel" parent="HUD/game_need"]
+offset_left = 256.0
+offset_top = 169.0
+offset_right = 316.0
+offset_bottom = 189.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_qek6e")
+
+[node name="Speed_Multiplayer_Counter" type="Panel" parent="HUD/game_need/GameControl_Buttons"]
+layout_mode = 0
+offset_left = 15.0
+offset_top = -20.206
+offset_right = 45.0
+offset_bottom = -0.20599937
+theme_override_styles/panel = SubResource("StyleBoxFlat_s5b24")
+metadata/_edit_group_ = true
+
+[node name="CenterContainer" type="CenterContainer" parent="HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -11.68
+offset_top = -7.035
+offset_right = 12.32
+offset_bottom = 7.965006
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter/CenterContainer"]
+texture_filter = 1
+layout_mode = 2
+theme_override_fonts/font = ExtResource("6_qyddi")
+theme_override_font_sizes/font_size = 14
+text = "2.0x"
+
+[node name="Less_Speed_Button" type="Panel" parent="HUD/game_need/GameControl_Buttons"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 19.0
+offset_bottom = 19.0
+
+[node name="Button" type="Button" parent="HUD/game_need/GameControl_Buttons/Less_Speed_Button"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 21.0
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("7_tlryv")
+
+[node name="Pause_Control_Button" type="Panel" parent="HUD/game_need/GameControl_Buttons"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 1.0
+offset_right = 39.0
+offset_bottom = 19.0
+
+[node name="Button" type="Button" parent="HUD/game_need/GameControl_Buttons/Pause_Control_Button"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 21.0
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("8_s5b24")
+
+[node name="More_Speed_Button" type="Panel" parent="HUD/game_need/GameControl_Buttons"]
+layout_mode = 0
+offset_left = 41.0
+offset_top = 1.0
+offset_right = 59.0
+offset_bottom = 19.0
+
+[node name="Button" type="Button" parent="HUD/game_need/GameControl_Buttons/More_Speed_Button"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 21.0
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("8_dsuda")
+
+[node name="Expand_Game_Need_Stuf" type="Panel" parent="HUD/game_need"]
+offset_left = 297.0
+offset_top = 4.0
+offset_right = 315.0
+offset_bottom = 22.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_tlryv")
+
+[node name="Button" type="Button" parent="HUD/game_need/Expand_Game_Need_Stuf"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0000153
+offset_top = -3.0
+offset_right = 20.999985
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("7_qek6e")
+
+[node name="Border" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+position = Vector2(163.99, -12.216)
+shape = SubResource("RectangleShape2D_qyddi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Border"]
+position = Vector2(329, 98)
+shape = SubResource("RectangleShape2D_qek6e")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Border"]
+position = Vector2(-10, 96)
+shape = SubResource("RectangleShape2D_qek6e")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Border"]
+position = Vector2(158, 203)
+shape = SubResource("RectangleShape2D_qyddi")
+
+[connection signal="pressed" from="HUD/game_need/GameControl_Buttons/Less_Speed_Button/Button" to="." method="_on_button_slow_down_pressed"]
+[connection signal="pressed" from="HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button" to="." method="_on_button_pouse_pressed"]
+[connection signal="pressed" from="HUD/game_need/GameControl_Buttons/More_Speed_Button/Button" to="." method="_on_button_speed_up_pressed"]
+[connection signal="pressed" from="HUD/game_need/Expand_Game_Need_Stuf/Button" to="." method="_on_button_pressed"]

@@ -8,11 +8,7 @@ func _ready() -> void:
 	fade(0.0)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
-
+# Change the button play texture, if you press it
 func _on_play_button_down() -> void:
 	play_button.icon = load("res://art/fonts/Play_button_pressed.png")
 func _on_play_button_up() -> void:
@@ -21,6 +17,7 @@ func _on_play_pressed() -> void:
 	await fade(1.0)
 	get_tree().call_deferred("change_scene_to_file" , "res://Scenes/main.tscn")
 
+# Create a fade effect 
 func fade(to_alfa):
 	var tween = create_tween()
 	tween. tween_property(fade_rect, "modulate:a", to_alfa, 1.0)

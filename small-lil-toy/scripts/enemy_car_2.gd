@@ -1,18 +1,20 @@
 extends Area2D
-# explanation in the enemy_car_2.gd
+
 var speed = 25
 var path_follow:PathFollow2D
-var health = 5
+var health = 8
 var alive = true
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if alive:
-		path_follow.progress += speed*delta*Data. speed_multiplayer
+		# Progress the enemy through the path 
+		path_follow.progress += speed*delta*Data.speed_multiplayer
+		# If it touches you will loose your hp
 		if path_follow.progress_ratio >= 0.99:
 			queue_free()
 			Data. enemys -= 1
+		# Change size and speed, if it goes vertical 
 		if (path_follow.progress_ratio >= 0.3 and path_follow.progress_ratio <= 0.47) or (path_follow.progress_ratio >= 0.73 and path_follow.progress_ratio <= 0.88):
 			speed = 13
 			scale.x = 4.0
@@ -23,16 +25,20 @@ func _process(delta: float) -> void:
 			scale.y = 4.0
 
 func setup(new_path_follow: PathFollow2D):
+	# idk wthitt, but I trust the guide guy 
 	path_follow = new_path_follow
 
 
 func _on_area_entered(area: Area2D) -> void:
-	if area. name. begins_with("Bullet_") or area. name == "Bullet" or area. name. begins_with("@Area2D@"):
+	# destroy the bullet, if it touch it
+	if area. name. begins_with("Bullet_") or area. name == "Bullet"  or area. name. begins_with("@Area2D@"):
 		area. queue_free()
 		health -= area. damage
-	if area. name. begins_with("Attack_range_horse_tower"):
+	# Disable horse attack, then it touch it
+	if area. name == "Attack_range_horse_tower":
 		health -= area. damage
 		area. disable_collision()
+	# The enemy is dyed, but it's followpath2d not. 
 	if health <= 0:
 		$AnimatedSprite2D.animation = "Boom"
 		alive = false

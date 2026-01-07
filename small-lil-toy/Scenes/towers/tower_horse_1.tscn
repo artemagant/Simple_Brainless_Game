@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bvufkc5cdjq0d"]
+[gd_scene load_steps=8 format=3 uid="uid://bvufkc5cdjq0d"]
 
 [ext_resource type="Script" uid="uid://dbu8d3lhrcprh" path="res://scripts/tower_horse_1.gd" id="1_cfynb"]
 [ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_tm0en"]
 [ext_resource type="Texture2D" uid="uid://yv6tpe3wj1rv" path="res://art/Towers/horse/Tower_Horse_idle_1.png" id="3_ky71j"]
+[ext_resource type="Script" uid="uid://dhai4aqq47h0g" path="res://scripts/attack_range_horse_tower.gd" id="4_q0tn1"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ky71j"]
 animations = [{
@@ -15,6 +16,10 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ky71j"]
+radius = 9.0
+height = 18.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_cfynb"]
 radius = 18.0
 
@@ -24,6 +29,19 @@ script = ExtResource("1_cfynb")
 [node name="Top" parent="." index="1"]
 sprite_frames = SubResource("SpriteFrames_ky71j")
 
+[node name="Attack_range_horse_tower" type="Area2D" parent="Top" index="0"]
+collision_layer = 2
+script = ExtResource("4_q0tn1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Top/Attack_range_horse_tower" index="0"]
+position = Vector2(9, 0)
+shape = SubResource("CapsuleShape2D_ky71j")
+disabled = true
+debug_color = Color(0.98443085, 0, 0.3436303, 0.42)
+
 [node name="CollisionShape2D" parent="Enemy_Detection_Area" index="0"]
 shape = SubResource("CircleShape2D_cfynb")
 debug_color = Color(0.9411765, 0.9882353, 1, 0.27450982)
+
+[connection signal="area_entered" from="Top/Attack_range_horse_tower" to="." method="_on_attack_range_area_entered"]
+[connection signal="timeout" from="Attack_couldown" to="." method="_on_attack_couldown_timeout"]

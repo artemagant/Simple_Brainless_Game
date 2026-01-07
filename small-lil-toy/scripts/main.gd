@@ -7,10 +7,7 @@ func _ready() -> void:
 	await _fade(0.0)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(_delta: float) -> void:
-	pass
-
+# Create a fade effect 
 func _fade(to_alfa):
 	var tween = create_tween()
 	tween. tween_property(fade, "modulate:a", to_alfa, 1.0)

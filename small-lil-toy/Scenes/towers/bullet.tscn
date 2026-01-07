@@ -50,10 +50,10 @@ script = ExtResource("1_7sqa8")
 [node name="Sprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_gko7o")
-animation = &"Boom"
 autoplay = "default"
-frame_progress = 0.9095653
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_7sqa8")
 debug_color = Color(0.8392157, 0.38431373, 0.047058824, 0)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
