@@ -5,6 +5,6 @@
 [node name="Player_Camera" type="Camera2D"]
 limit_left = -64
 limit_top = -48
-limit_right = 64
+limit_right = 192
 limit_bottom = 48
 script = ExtResource("1_065cj")

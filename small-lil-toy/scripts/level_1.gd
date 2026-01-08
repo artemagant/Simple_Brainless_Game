@@ -2,6 +2,8 @@ extends Node2D
 
 var first_enemy_scene = preload("res://Scenes/Enemy_car_1.tscn")
 var second_enemy_scene = preload("res://Scenes/Enemy_car_2.tscn")
+var fird_enemy_scene = preload("res://Scenes/Enemy_car_3.tscn")
+var fourth_enemy_scene = preload("res://Scenes/Enemy_car_4.tscn")
 var bullet_scene := preload("res://Scenes/towers/bullet.tscn")
 @onready var Wave_Counter_Panel := $HUD/Wave_Counter
 @onready var Wave_Counter_Number := $HUD/Wave_Counter/CenterContainer/Number
@@ -22,6 +24,8 @@ func _process(_delta: float) -> void:
 	# Update every labels, that needs in it
 	$HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter/CenterContainer/Label.text = str(Data. speed_multiplayer) + "x"
 	Wave_Counter_Number.text = "wave: " + str(int(Data. wave))
+	$HUD/Hp_Counter/CenterContainer/Label. text = str(int(Data. player_health))
+	
 
 func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	# idk wthitt, but I trust the guide guy
@@ -39,12 +43,14 @@ func start_wave(wave):
 		wavee = Data. wave_content_level_1.wave_2.duplicate()
 	elif wave == 3:
 		wavee = Data. wave_content_level_1.wave_3.duplicate()
+	elif wave == 4:
+		wavee = Data. wave_content_level_1.wave_4.duplicate()
 	else:
 		return
 	# Spawn enemys
 	while wavee:
 		# If in array first thing is integer, so it means it's a enemy
-		if wavee[0] is int:
+		if wavee[0] is int and Data. speed_variation != 0:
 			# Spawn enemy of it's type
 			if wavee[0] == 1:
 				
@@ -64,17 +70,38 @@ func start_wave(wave):
 				enemy. name = "enemy_car_2"
 				follow_path.add_child(enemy)
 				wavee. remove_at(0)
+			elif wavee[0] == 3:
+				Data. enemys += 1
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = fird_enemy_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_car_2"
+				follow_path.add_child(enemy)
+				wavee. remove_at(0)
+			elif wavee[0] == 4:
+				Data. enemys += 1
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = fourth_enemy_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_car_2"
+				follow_path.add_child(enemy)
+				wavee. remove_at(0)
 			# Change enemy type, if it missed
 			else:
-				wavee[0] -= 1
+				wavee[0] = 1
+				
+				
 		# If in array first thing is float, so it means it's a couldown between spawns
-		if wavee[0] is float:
+		elif wavee[0] is float and Data. speed_variation != 0:
 			if Data. speed_multiplayer != 0:
 				await get_tree().create_timer(wavee[0]/Data. speed_multiplayer).timeout
 				wavee. remove_at(0)
 			else:
 				await get_tree().create_timer(wavee[0]/previous_speed).timeout
 				wavee. remove_at(0)
+		await get_tree().create_timer(0.1).timeout
 	
 	# Wait until all of the enemys dyed
 	while true:
@@ -88,11 +115,13 @@ func start_wave(wave):
 			break
 		else:
 			await get_tree().create_timer(0.1).timeout
+			continue
+
 	# After wave we call the function, that call this function again, but with little delay 
 	wave_couldown()
 func wave_couldown():
 	# Couldown between waves
-	await get_tree().create_timer(1.0).timeout
+	await get_tree().create_timer(3.0).timeout
 	start_wave(Data. wave)
 
 # This button open and close the towers shop

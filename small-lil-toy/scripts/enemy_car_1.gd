@@ -2,7 +2,7 @@ extends Area2D
 # explanation in the enemy_car_2.gd
 var speed = 25
 var path_follow:PathFollow2D
-var health = 5
+var health = 8
 var alive = true
 var earn = 5
 
@@ -15,7 +15,6 @@ func _process(delta: float) -> void:
 		if path_follow.progress_ratio >= 0.99:
 			queue_free()
 			Data. enemys -= 1
-			print(Data. enemys)
 			Data. player_health -= health
 			Data. money += earn * Data. money_multiplayer / 2
 			Data. save()
