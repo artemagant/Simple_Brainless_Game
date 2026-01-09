@@ -4,6 +4,8 @@ extends Tower
 var preveus_speed_multiplayer = Data. speed_multiplayer
 # Explanation in the tower_horse_1.gd, but hear I don't understand half of the things, but I trust the guide guy
 
+func _ready() -> void:
+	Change_wait_time()
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if enemys. size() > 0:

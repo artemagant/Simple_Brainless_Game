@@ -4,7 +4,7 @@ extends Area2D
 # idk wthitt, but I trust the guide guy
 var direction: Vector2
 var speed = 350
-var damage = 6
+var damage = 8
 func _ready() -> void:
 	speed = min(350*Data. speed_variation, 600)
 @warning_ignore("unused_parameter")

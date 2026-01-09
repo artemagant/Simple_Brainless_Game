@@ -4,7 +4,7 @@ extends Tower
 var can_attack = false
 var preveus_speed_multiplayer = Data. speed_multiplayer
 func _ready() -> void:
-	pass
+	Change_wait_time()
 		
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -15,6 +15,7 @@ var place_tower_index = 0
 
 var placed_towers = [0, 0, 0, 0, 0, 0, 0, 0]
 
+var towers_positions = [Vector2(0, 60), Vector2(72, 108), Vector2(72, 20), Vector2(160,76), Vector2(128, 12),  Vector2(208, 12), Vector2(280, 60),Vector2(280, 108)]
 func _process(_delta: float) -> void:
 	if speed_variation == 0:
 		speed_multiplayer = 0.0
@@ -51,7 +52,8 @@ const wave_content_level_1 = {
 
 var towers_cost = {
 	"horse": 75,
-	"soldier_gun": 100, 
+	"soldier_gun": 150, 
+	"soldier_sniper": 300
 }
 
 #

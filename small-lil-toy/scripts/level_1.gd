@@ -19,26 +19,43 @@ var tower_soldier_sniper_scene = preload("res://Scenes/towers/tower_soldier_snip
 
 @onready var Wave_Counter_Panel := $HUD/Wave_Counter
 @onready var Wave_Counter_Number := $HUD/Wave_Counter/CenterContainer/Number
+
+var color = Color(0.6, 0.6, 0.6)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	_on_button_pouse_pressed()
 	# Change the wave panel size from current wave number, because idk
-	
 	Wave_Counter_Panel.size.x = Wave_Counter_Number.size.x
 	$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
 	Data. speed_variation = 0
 	previous_speed = 5
 	RenderingServer. set_default_clear_color("37213B")
 	start_wave(Data. wave)
-	$Towers.get_children()[1].connect("shoot", create_bullet)
-	#$Towers/Tower_soldier_gun.connect("shoot", create_bullet)
-	$Towers/Tower_soldier_sniper.connect("sniper_shoot", create_sniper_bullet)
+	load_towers()
+	
 func _process(_delta: float) -> void:
 	# Update every labels, that needs in it
 	$HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter/CenterContainer/Label.text = str(Data. speed_multiplayer) + "x"
 	Wave_Counter_Number.text = "wave: " + str(int(Data. wave))
 	$HUD/Hp_Counter/CenterContainer/Label. text = str(int(Data. player_health))
 	$HUD/Money_counter/CenterContainer/Label.text = str(int(Data. money))
+	# Highlight towers buy buttons, if they pressed
+	if Data. place_tower_index == 0:
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	elif Data. place_tower_index == 1:
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower.modulate = color
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper.modulate = Color(1.0, 1.0, 1.0, 1.0)
+	elif Data. place_tower_index == 2:
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun.modulate = color
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper.modulate= Color(1.0, 1.0, 1.0, 1.0)
+	elif Data. place_tower_index == 3:
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun.modulate = Color(1.0, 1.0, 1.0, 1.0)
+		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper.modulate = color
 
 func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	# idk wthitt, but I trust the guide guy
@@ -52,6 +69,7 @@ func create_sniper_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	bullet. name = "Bullet_"
 	bullet. setup(pos, dir, bullet_enum)
 	$Bullets.add_child(bullet)
+
 
 func start_wave(wave):
 	var wavee:Array
@@ -126,6 +144,7 @@ func start_wave(wave):
 	while true:
 		if Data. enemys < 0:
 			Data. wave += 1
+			Data. money += 50
 			Data. save()
 			if Data. speed_variation != 0:
 				previous_speed = Data. speed_variation
@@ -245,55 +264,102 @@ func _on_button_to_buy_soldier_sniper_pressed() -> void:
 		buy_tower_soldier_sniper_button_pressed = true
 		buy_tower_horse_button_pressed = false
 		buy_tower_soldier_button_pressed = false
-#
-# Function to place
-#
-
-func place_tower(tower_path, pos, cost, can_shoot):
-	if Data. money >= cost:
-		var towers = get_node_or_null("Towers")
-		var instantiated = tower_path.instantiate()
-		towers. add_child(instantiated)
-		instantiated.position = pos
-		Data. money -= cost
-		print(1)
-		if can_shoot == "soldier_gun":
-			$Towers.get_children()[towers. get_children().size() - 1].connect("shoot", create_bullet)
-		elif can_shoot == "soldier_sniper":
-			$Towers.get_children()[towers. get_children().size() - 1].connect("sniper_shoot", create_bullet)
 
 #
 # Every place buttons (8)
 #
+func load_towers():
+	var placed_towers = Data. placed_towers
+	var tower
+	for typee in 8:
+		var posss = Data. towers_positions[typee]
+		#print(Data. placed_towers[typee])
+		if Data. placed_towers[typee] == 0:
+			continue
+		elif Data. placed_towers[typee] == 1:
+			tower = tower_horse_scene.instantiate()
+		elif Data. placed_towers[typee] == 2:
+			tower = tower_soldier_scene.instantiate()
+			tower. connect("shoot", create_bullet)
+		elif Data. placed_towers[typee] == 3:
+			tower = tower_soldier_sniper_scene.instantiate()
+			tower. connect("sniper_shoot", create_sniper_bullet)
+		else:
+			continue
+		$Towers.add_child(tower)
+		tower. position = posss
 # Submith function
 func submith():
 	if Data. place_tower_index != 0:
 		$HUD/game_need/Submith_Buttons.visible = true
+# If button yes was pressed
 func yes_pressed():
-	if placed == 0:
-		$HUD/game_need/Submith_Buttons.visible = false
+	# it need for change array of towers
+	var index
+	if placed:
+		index = placed
+	elif placed == 0:
+		index = placed
+	else:
+		return
+	
+	# Spawn the towrrs
+	var tower
+	if type == 1:
+		# Check if enough money
+		if Data. money < Data. towers_cost.horse:
+			return
+		tower = tower_horse_scene.instantiate()
+		Data. placed_towers[index] = 1
+		Data. money -= Data. towers_cost.horse
+	elif type == 2 :
+		# Check if enough money 
+		if Data. money < Data. towers_cost.soldier_gun:
+			return
+		tower = tower_soldier_scene.instantiate()
+		# Connect shoot signal
+		tower. connect("shoot", create_bullet)
+		Data. placed_towers[index] = 2
+		Data. money -= Data. towers_cost.soldier_gun
+	elif type == 3:
+		# Check if enough money 
+		if Data. money < Data. towers_cost.soldier_sniper:
+			return
+		tower = tower_soldier_sniper_scene.instantiate()
+		# Connect shoot signal
+		tower. connect("sniper_shoot", create_sniper_bullet)
+		Data. placed_towers[index] = 3
+		Data. money -= Data. towers_cost.soldier_sniper
+	$HUD/game_need/Submith_Buttons.visible = false
+	# Delete the ghost
+	var children = get_children()
+	for child in children:
+		if child. name == "tower_horse_ghost" or child. name. begins_with("tower_horse_ghost"):
+			child. queue_free()
+	# Add tower to the game
+	$Towers.add_child(tower)
+	tower. position = poss
+	# Reset every varyebles 
+	pressed = false
+	type = 0
+	poss = 0
+	namee = 0
+	placed = null
+func no_pressed():
+	if pressed:
+		# Delete the ghost
 		var children = get_children()
 		for child in children:
-			if child. name == "tower_horse_ghost":
+			if child. name. begins_with("tower_horse_ghost"):
 				child. queue_free()
 				break
-		var tower
-		if type == 1:
-			tower = tower_horse_scene.instantiate()
-			Data. placed_towers[0] = 1
-		elif type == 2:
-			tower = tower_soldier_scene.instantiate()
-			tower. connect("shoot", create_bullet)
-			Data. placed_towers[0] = 2
-		elif type == 3:
-			tower = tower_soldier_sniper_scene.instantiate()
-			tower. connect("sniper_shoot", create_sniper_bullet)
-			Data. placed_towers[0] = 2
-		$Towers.add_child(tower)
-		tower. position = poss
+		# Reset varyebles
 		pressed = false
-		
-	
+		type = 0
+		poss = 0
+		namee = 0
+		placed = null
+		$HUD/game_need/Submith_Buttons.visible = false
 var placed
 var type
 var poss
@@ -304,40 +370,327 @@ func _on_place_button_1_pressed() -> void:
 	if Data. placed_towers[0]:
 		return
 	if pressed:
-		print(1)
 		var children = get_children()
 		for child in children:
 			if child. name. begins_with("tower_horse_ghost"):
 				child. queue_free()
 				break
+	var posss = Data. towers_positions[0]
 	if Data. place_tower_index == 1:
 		var instantiated = ghost_towers.horse.instantiate()
 		add_child(instantiated)
 		instantiated. name = "tower_horse_ghost"
 		namee = instantiated. name
-		instantiated.position = Vector2(0,60)
+		instantiated.position = posss
 		placed = 0
 		type = 1
-		poss = Vector2(0, 60)
+		poss =posss
 		submith()
 	elif Data. place_tower_index == 2:
 		var instantiated = ghost_towers.soldier_gun.instantiate()
 		add_child(instantiated)
 		instantiated. name = "tower_horse_ghost"
 		namee = instantiated. name
-		instantiated.position = Vector2(0,60)
+		instantiated.position = posss
 		placed = 0
 		type = 2
-		poss = Vector2(0, 60)
+		poss = posss
 		submith()
 	elif Data. place_tower_index == 3:
 		var instantiated = ghost_towers.soldier_sniper.instantiate()
 		add_child(instantiated)
 		instantiated. name = "tower_horse_ghost"
 		namee = instantiated. name
-		instantiated.position = Vector2(0,60)
+		instantiated.position = posss
 		placed = 0
 		type = 3
-		poss = Vector2(0, 60)
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_2_pressed() -> void:
+	if Data. placed_towers[1]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[1]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 1
+		type = 1
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 1
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 1
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_3_pressed() -> void:
+	if Data. placed_towers[2]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[2]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 2
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 2
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 2
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_4_pressed() -> void:
+	if Data. placed_towers[3]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[3]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 3
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 3
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 3
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_5_pressed() -> void:
+	if Data. placed_towers[4]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[4]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 4
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 4
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 4
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_6_pressed() -> void:
+	if Data. placed_towers[5]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[5]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 5
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 5
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 5
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_7_pressed() -> void:
+	if Data. placed_towers[6]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[6]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 6
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 6
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 6
+		type = 3
+		poss = posss
+		submith()
+	pressed = true
+func _on_place_button_8_pressed() -> void:
+	if Data. placed_towers[7]:
+		return
+	if pressed:
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost") or child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+	var posss = Data. towers_positions[7]
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 7
+		type = 1
+		poss =posss
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 7
+		type = 2
+		poss = posss
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = posss
+		placed = 7
+		type = 3
+		poss = posss
 		submith()
 	pressed = true

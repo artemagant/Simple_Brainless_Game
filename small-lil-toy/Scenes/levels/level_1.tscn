@@ -1,11 +1,8 @@
-[gd_scene load_steps=47 format=4 uid="uid://8nh8ibn5bou2"]
+[gd_scene load_steps=44 format=4 uid="uid://8nh8ibn5bou2"]
 
 [ext_resource type="Script" uid="uid://c00572iwly3hf" path="res://scripts/level_1.gd" id="1_mkwgf"]
 [ext_resource type="Texture2D" uid="uid://c2lwx7a67g8ys" path="res://art/TileSets/TileSet_Level_1.png" id="2_cru1l"]
-[ext_resource type="PackedScene" uid="uid://bvufkc5cdjq0d" path="res://Scenes/towers/tower_horse_1.tscn" id="3_cru1l"]
-[ext_resource type="PackedScene" uid="uid://c3hsihfym3j3p" path="res://Scenes/towers/tower_soldier_gun.tscn" id="3_yffda"]
 [ext_resource type="PackedScene" uid="uid://4fsqgch4mfw" path="res://Scenes/ui/player_camera.tscn" id="5_0lml3"]
-[ext_resource type="PackedScene" uid="uid://bi3mbgqo3muqx" path="res://Scenes/towers/tower_soldier_sniper.tscn" id="5_flpb6"]
 [ext_resource type="Texture2D" uid="uid://c3pede62ywdvq" path="res://art/Another Different Stuff/heart.png" id="6_lpshy"]
 [ext_resource type="Texture2D" uid="uid://bhwe42alk3ca5" path="res://art/Another Different Stuff/Money_Bug.png" id="6_onyy7"]
 [ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="6_qyddi"]
@@ -263,15 +260,6 @@ curve = SubResource("Curve2D_f5o0x")
 
 [node name="Towers" type="Node2D" parent="."]
 
-[node name="Tower_Horse_1" parent="Towers" instance=ExtResource("3_cru1l")]
-position = Vector2(80, 56)
-
-[node name="Tower_soldier_gun" parent="Towers" instance=ExtResource("3_yffda")]
-position = Vector2(208, 128)
-
-[node name="Tower_soldier_sniper" parent="Towers" instance=ExtResource("5_flpb6")]
-position = Vector2(208, 8)
-
 [node name="Bullets" type="Node2D" parent="."]
 
 [node name="Player_Camera" parent="." instance=ExtResource("5_0lml3")]
@@ -363,6 +351,7 @@ offset_bottom = 192.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_qyddi")
 
 [node name="Button_To_Buy_Horse_Tower" type="Panel" parent="HUD/game_need/Towers_Manager"]
+modulate = Color(0.71074915, 0.71074915, 0.71074915, 1)
 texture_filter = 1
 layout_mode = 0
 offset_left = 10.6
@@ -380,6 +369,16 @@ offset_right = 21.485
 offset_bottom = 21.28
 focus_mode = 0
 icon = ExtResource("7_bk5qg")
+
+[node name="Label" type="Label" parent="HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 1.573
+offset_top = -13.115
+offset_right = 41.572998
+offset_bottom = 9.885
+theme_override_fonts/font = ExtResource("6_qyddi")
+text = "75"
 
 [node name="Button_To_Buy_Soldier_Gun" type="Panel" parent="HUD/game_need/Towers_Manager"]
 texture_filter = 1
@@ -400,6 +399,16 @@ offset_bottom = 21.28
 focus_mode = 0
 icon = ExtResource("8_iu068")
 
+[node name="Label" type="Label" parent="HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -1.568
+offset_top = -13.115
+offset_right = 38.432
+offset_bottom = 9.885
+theme_override_fonts/font = ExtResource("6_qyddi")
+text = "150"
+
 [node name="Button_To_Buy_Soldier_Sniper" type="Panel" parent="HUD/game_need/Towers_Manager"]
 texture_filter = 1
 layout_mode = 0
@@ -419,6 +428,16 @@ offset_bottom = 37.0
 rotation = 1.5707964
 focus_mode = 0
 icon = ExtResource("12_n3ge2")
+
+[node name="Label" type="Label" parent="HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -2.834
+offset_top = -13.115
+offset_right = 37.166
+offset_bottom = 9.885
+theme_override_fonts/font = ExtResource("6_qyddi")
+text = "300"
 
 [node name="GameControl_Buttons" type="Panel" parent="HUD/game_need"]
 offset_left = 256.0
@@ -697,7 +716,6 @@ offset_right = 8.0
 offset_bottom = 72.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "1"
 
 [node name="Place_Button_2" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -707,7 +725,6 @@ offset_right = 80.0
 offset_bottom = 120.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "2"
 
 [node name="Place_Button_3" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -718,7 +735,6 @@ offset_right = 80.0
 offset_bottom = 32.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "3"
 
 [node name="Place_Button_4" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -728,7 +744,6 @@ offset_right = 168.0
 offset_bottom = 88.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "4"
 
 [node name="Place_Button_5" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -738,7 +753,6 @@ offset_right = 136.0
 offset_bottom = 24.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "5"
 
 [node name="Place_Button_6" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -748,7 +762,6 @@ offset_right = 216.0
 offset_bottom = 24.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "6"
 
 [node name="Place_Button_7" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -758,7 +771,6 @@ offset_right = 288.0
 offset_bottom = 72.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "7"
 
 [node name="Place_Button_8" type="Button" parent="Place_Buttons"]
 z_index = -1
@@ -768,7 +780,6 @@ offset_right = 288.0
 offset_bottom = 120.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
-text = "8"
 
 [connection signal="pressed" from="HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower/Button" to="." method="_on_button_to_buy_horse_tower_pressed"]
 [connection signal="pressed" from="HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun/Button" to="." method="_on_button_to_buy_soldier_tower_pressed"]
@@ -779,6 +790,14 @@ text = "8"
 [connection signal="pressed" from="HUD/game_need/Expand_Game_Need_Stuf/Button" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="HUD/game_need/Setting_Button/Button" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="HUD/game_need/Submith_Buttons/Yes/Button" to="." method="yes_pressed"]
+[connection signal="pressed" from="HUD/game_need/Submith_Buttons/No/Button" to="." method="no_pressed"]
 [connection signal="pressed" from="HUD/Settings/Button_Return_To_The_Menu/button" to="." method="_on_button_return_to_the_menu_pressed"]
 [connection signal="pressed" from="HUD/Settings/Button_Close_Settings/Button" to="." method="_on_button_close_settings_pressed"]
 [connection signal="pressed" from="Place_Buttons/Place_Button_1" to="." method="_on_place_button_1_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_2" to="." method="_on_place_button_2_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_3" to="." method="_on_place_button_3_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_4" to="." method="_on_place_button_4_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_5" to="." method="_on_place_button_5_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_6" to="." method="_on_place_button_6_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_7" to="." method="_on_place_button_7_pressed"]
+[connection signal="pressed" from="Place_Buttons/Place_Button_8" to="." method="_on_place_button_8_pressed"]
