@@ -5,6 +5,18 @@ var second_enemy_scene = preload("res://Scenes/Enemy_car_2.tscn")
 var fird_enemy_scene = preload("res://Scenes/Enemy_car_3.tscn")
 var fourth_enemy_scene = preload("res://Scenes/Enemy_car_4.tscn")
 var bullet_scene := preload("res://Scenes/towers/bullet.tscn")
+var sniper_bullet_scene := preload("res://Scenes/towers/bullet_for_sniper.tscn")
+
+var ghost_towers = {
+	"horse": preload("res://Scenes/towers/ghost_tower_horse_1.tscn"),
+	"soldier_gun": preload("res://Scenes/towers/ghost_tower_soldier_gun.tscn"),
+	"soldier_sniper": preload("res://Scenes/towers/ghost_tower_soldier_sniper.tscn")
+}
+
+var tower_horse_scene := preload("res://Scenes/towers/tower_horse_1.tscn")
+var tower_soldier_scene := preload("res://Scenes/towers/tower_soldier_gun.tscn")
+var tower_soldier_sniper_scene = preload("res://Scenes/towers/tower_soldier_sniper.tscn")
+
 @onready var Wave_Counter_Panel := $HUD/Wave_Counter
 @onready var Wave_Counter_Number := $HUD/Wave_Counter/CenterContainer/Number
 # Called when the node enters the scene tree for the first time.
@@ -18,18 +30,25 @@ func _ready() -> void:
 	previous_speed = 5
 	RenderingServer. set_default_clear_color("37213B")
 	start_wave(Data. wave)
-	$Towers/Tower_soldier_gun.connect("shoot", create_bullet)
-	$Towers/Tower_soldier_gun2.connect("shoot", create_bullet)
+	$Towers.get_children()[1].connect("shoot", create_bullet)
+	#$Towers/Tower_soldier_gun.connect("shoot", create_bullet)
+	$Towers/Tower_soldier_sniper.connect("sniper_shoot", create_sniper_bullet)
 func _process(_delta: float) -> void:
 	# Update every labels, that needs in it
 	$HUD/game_need/GameControl_Buttons/Speed_Multiplayer_Counter/CenterContainer/Label.text = str(Data. speed_multiplayer) + "x"
 	Wave_Counter_Number.text = "wave: " + str(int(Data. wave))
 	$HUD/Hp_Counter/CenterContainer/Label. text = str(int(Data. player_health))
-	
+	$HUD/Money_counter/CenterContainer/Label.text = str(int(Data. money))
 
 func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	# idk wthitt, but I trust the guide guy
 	var bullet = bullet_scene.instantiate()
+	bullet. name = "Bullet_"
+	bullet. setup(pos, dir, bullet_enum)
+	$Bullets.add_child(bullet)
+func create_sniper_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
+	# idk wthitt, but I trust the guide guy
+	var bullet = sniper_bullet_scene.instantiate()
 	bullet. name = "Bullet_"
 	bullet. setup(pos, dir, bullet_enum)
 	$Bullets.add_child(bullet)
@@ -181,7 +200,6 @@ func _on_button_settings_pressed() -> void:
 
 # Return in the menu
 func _on_button_return_to_the_menu_pressed() -> void:
-	Data. save()
 	get_tree().call_deferred("change_scene_to_file", "res://Scenes/menu.tscn")
 
 # Turn off settings panel
@@ -189,3 +207,137 @@ func _on_button_close_settings_pressed() -> void:
 	if settings:
 		settings = false
 		$HUD/Settings. visible = false
+
+
+#
+# Select which tower you will plays system
+#
+var buy_tower_horse_button_pressed = false
+func _on_button_to_buy_horse_tower_pressed() -> void:
+	if buy_tower_horse_button_pressed:
+		Data. place_tower_index = 0
+		buy_tower_horse_button_pressed = false
+	else:
+		Data. place_tower_index = 1
+		buy_tower_horse_button_pressed = true
+		buy_tower_soldier_button_pressed = false
+		buy_tower_soldier_sniper_button_pressed = false
+
+var buy_tower_soldier_button_pressed = false
+func _on_button_to_buy_soldier_tower_pressed() -> void:
+	if buy_tower_soldier_button_pressed:
+		Data. place_tower_index = 0
+		buy_tower_soldier_button_pressed = false
+	else:
+		Data. place_tower_index = 2
+		buy_tower_soldier_button_pressed = true
+		buy_tower_soldier_sniper_button_pressed = false
+		buy_tower_horse_button_pressed = false
+		
+
+var buy_tower_soldier_sniper_button_pressed = false
+func _on_button_to_buy_soldier_sniper_pressed() -> void:
+	if buy_tower_soldier_sniper_button_pressed:
+		Data. place_tower_index = 0
+		buy_tower_soldier_sniper_button_pressed = false
+	else:
+		Data. place_tower_index = 3
+		buy_tower_soldier_sniper_button_pressed = true
+		buy_tower_horse_button_pressed = false
+		buy_tower_soldier_button_pressed = false
+#
+# Function to place
+#
+
+func place_tower(tower_path, pos, cost, can_shoot):
+	if Data. money >= cost:
+		var towers = get_node_or_null("Towers")
+		var instantiated = tower_path.instantiate()
+		towers. add_child(instantiated)
+		instantiated.position = pos
+		Data. money -= cost
+		print(1)
+		if can_shoot == "soldier_gun":
+			$Towers.get_children()[towers. get_children().size() - 1].connect("shoot", create_bullet)
+		elif can_shoot == "soldier_sniper":
+			$Towers.get_children()[towers. get_children().size() - 1].connect("sniper_shoot", create_bullet)
+
+#
+# Every place buttons (8)
+#
+# Submith function
+func submith():
+	if Data. place_tower_index != 0:
+		$HUD/game_need/Submith_Buttons.visible = true
+func yes_pressed():
+	if placed == 0:
+		$HUD/game_need/Submith_Buttons.visible = false
+		var children = get_children()
+		for child in children:
+			if child. name == "tower_horse_ghost":
+				child. queue_free()
+				break
+		var tower
+		if type == 1:
+			tower = tower_horse_scene.instantiate()
+			Data. placed_towers[0] = 1
+		elif type == 2:
+			tower = tower_soldier_scene.instantiate()
+			tower. connect("shoot", create_bullet)
+			Data. placed_towers[0] = 2
+		elif type == 3:
+			tower = tower_soldier_sniper_scene.instantiate()
+			tower. connect("sniper_shoot", create_sniper_bullet)
+			Data. placed_towers[0] = 2
+		$Towers.add_child(tower)
+		tower. position = poss
+		pressed = false
+		
+	
+var placed
+var type
+var poss
+var namee
+var pressed = false
+func _on_place_button_1_pressed() -> void:
+	
+	if Data. placed_towers[0]:
+		return
+	if pressed:
+		print(1)
+		var children = get_children()
+		for child in children:
+			if child. name. begins_with("tower_horse_ghost"):
+				child. queue_free()
+				break
+	if Data. place_tower_index == 1:
+		var instantiated = ghost_towers.horse.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = Vector2(0,60)
+		placed = 0
+		type = 1
+		poss = Vector2(0, 60)
+		submith()
+	elif Data. place_tower_index == 2:
+		var instantiated = ghost_towers.soldier_gun.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = Vector2(0,60)
+		placed = 0
+		type = 2
+		poss = Vector2(0, 60)
+		submith()
+	elif Data. place_tower_index == 3:
+		var instantiated = ghost_towers.soldier_sniper.instantiate()
+		add_child(instantiated)
+		instantiated. name = "tower_horse_ghost"
+		namee = instantiated. name
+		instantiated.position = Vector2(0,60)
+		placed = 0
+		type = 3
+		poss = Vector2(0, 60)
+		submith()
+	pressed = true

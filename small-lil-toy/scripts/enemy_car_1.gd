@@ -14,10 +14,9 @@ func _process(delta: float) -> void:
 		path_follow.progress += speed*delta*Data. speed_multiplayer
 		if path_follow.progress_ratio >= 0.99:
 			queue_free()
-			Data. enemys -= 1
+			Data. enemys -= 1	
 			Data. player_health -= health
 			Data. money += earn * Data. money_multiplayer / 2
-			Data. save()
 		if (path_follow.progress_ratio >= 0.0713 and path_follow.progress_ratio <= 0.1548) or (path_follow.progress_ratio >= 0.2767 and path_follow.progress_ratio <= 0.3121) or (path_follow.progress_ratio >= 0.3933 and path_follow.progress_ratio <= 0.4288) or (path_follow.progress_ratio >= 0.5304 and path_follow.progress_ratio <= 0.5784) or (path_follow.progress_ratio >= 0.741 and path_follow.progress_ratio <= 0.812) or (path_follow.progress_ratio >= 0.9344 and path_follow.progress_ratio <= 0.97):
 			speed = 13
 			scale.x = 4.0
@@ -45,7 +44,6 @@ func _on_area_entered(area: Area2D) -> void:
 		Data. money += earn * Data. money_multiplayer
 		
 		call_deferred("disable_collision")
-	Data. save()
 
 func disable_collision():
 	$CollisionShape2D.disabled = true

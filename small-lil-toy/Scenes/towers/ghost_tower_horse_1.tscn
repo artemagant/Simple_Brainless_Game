@@ -1,0 +1,33 @@
+[gd_scene load_steps=6 format=3 uid="uid://cupo3x2c5k2qp"]
+
+[ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_4sncl"]
+[ext_resource type="Script" uid="uid://dbu8d3lhrcprh" path="res://scripts/tower_horse_1.gd" id="2_63fg7"]
+[ext_resource type="Texture2D" uid="uid://yv6tpe3wj1rv" path="res://art/Towers/horse/Tower_Horse_idle_1.png" id="3_1xqw8"]
+[ext_resource type="Texture2D" uid="uid://c50wcc0c0pdir" path="res://art/Towers/horse/Attack_Radius_Horse_Tower.png" id="4_4sncl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ky71j"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_1xqw8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ghost_Tower_Horse_1" instance=ExtResource("1_4sncl")]
+modulate = Color(1, 1, 1, 0.39215687)
+script = ExtResource("2_63fg7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture_filter = 1
+texture = ExtResource("4_4sncl")
+
+[node name="Top" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_ky71j")
+
+[node name="CollisionShape2D" parent="Enemy_Detection_Area" index="0"]
+debug_color = Color(0.9411765, 0.9882353, 1, 0.27450982)
+
+[connection signal="timeout" from="Attack_couldown" to="." method="_on_attack_couldown_timeout"]

@@ -16,12 +16,11 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ky71j"]
-radius = 9.0
-height = 18.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_q0tn1"]
+radius = 14.035668
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cfynb"]
-radius = 18.0
+radius = 25.019993
 
 [node name="Tower_Horse_1" instance=ExtResource("1_tm0en")]
 script = ExtResource("1_cfynb")
@@ -34,8 +33,8 @@ collision_layer = 2
 script = ExtResource("4_q0tn1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Top/Attack_range_horse_tower" index="0"]
-position = Vector2(9, 0)
-shape = SubResource("CapsuleShape2D_ky71j")
+position = Vector2(17, 0)
+shape = SubResource("CircleShape2D_q0tn1")
 disabled = true
 debug_color = Color(0.98443085, 0, 0.3436303, 0.42)
 

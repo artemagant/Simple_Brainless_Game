@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://b1qfsrc1u8kbl"]
+
+[ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_k1tp8"]
+[ext_resource type="Texture2D" uid="uid://cl6jqao60vbrb" path="res://art/Towers/soldier_gun/Attack_Radius_Soldier_Gun.png" id="3_k1tp8"]
+[ext_resource type="Texture2D" uid="uid://bbxw3063bp8x3" path="res://art/Towers/soldier_gun/Tower_Soldier_Pistol_idle_1.png" id="3_md6x8"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qfc2c"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_md6x8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Ghost_Tower_soldier_gun" instance=ExtResource("1_k1tp8")]
+modulate = Color(1, 1, 1, 0.39215687)
+script = null
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="0"]
+texture_filter = 1
+texture = ExtResource("3_k1tp8")
+
+[node name="Top" parent="." index="2"]
+sprite_frames = SubResource("SpriteFrames_qfc2c")
+
+[node name="CollisionShape2D" parent="Enemy_Detection_Area" index="0"]
+debug_color = Color(0.11372549, 0.64705884, 0, 0.26666668)
+
+[node name="Attack_couldown" parent="." index="4"]
+autostart = false
+
+[connection signal="timeout" from="Attack_couldown" to="." method="_on_attack_couldown_timeout"]

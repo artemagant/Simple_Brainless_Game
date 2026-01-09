@@ -2,6 +2,8 @@ class_name Tower extends Node2D
 # idk wthitt, but I trust the guide guy 
 @warning_ignore("unused_signal")
 signal shoot(pos: Vector2, dir: float, bullet_enum: Data. Bullet)
+@warning_ignore("unused_signal")
+signal sniper_shoot(pos: Vector2, dir: float, bullet_enum: Data. Bullet)
 
 var enemys:Array
 
