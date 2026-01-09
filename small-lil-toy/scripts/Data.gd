@@ -8,13 +8,12 @@ var record_wave = 0
 var enemys = 0
 var speed_multiplayer = 1
 var speed_variation = 5
-var player_health = 75
+var player_health = 10
 var money = 150
-var money_multiplayer = 5.0
+var money_multiplayer = 1.0
 var place_tower_index = 0
 
 var placed_towers = [0, 0, 0, 0, 0, 0, 0, 0]
-
 var towers_positions = [Vector2(0, 60), Vector2(72, 108), Vector2(72, 20), Vector2(160,76), Vector2(128, 12),  Vector2(208, 12), Vector2(280, 60),Vector2(280, 108)]
 func _process(_delta: float) -> void:
 	if speed_variation == 0:
@@ -105,15 +104,17 @@ func load_game():
 	#
 	wave = data. get("wave", 1)
 	record_wave = data. get("record_wave", 0)
-	player_health = data. get("player_health", 75)
+	player_health = data. get("player_health", 10)
 	money = data. get("money", 150)
 	money_multiplayer = data. get("money_multiplayer", 5.0)
 	placed_towers = data. get("placed_towers", [0,0,0,0,0,0,0,0])
 # function for reset the game
 func reset_game():
+	if record_wave > wave:
+		record_wave = wave
 	wave = 1
 	money = 150
 	money_multiplayer = 1
-	player_health = 75
+	player_health = 10
 	placed_towers = [0,0,0,0,0,0,0,0]
 	save()

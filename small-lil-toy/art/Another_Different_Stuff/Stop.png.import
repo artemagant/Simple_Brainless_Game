@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cb82xjgti2sae"
-path="res://.godot/imported/Expand_Game_Need_Staf_Button_Icon.png-a793a5a48829233f027fcbd3bfdf9564.ctex"
+uid="uid://dbo0hi1np6d3l"
+path="res://.godot/imported/Stop.png-08ff15944f64c03bc298388a220cb7af.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon.png"
-dest_files=["res://.godot/imported/Expand_Game_Need_Staf_Button_Icon.png-a793a5a48829233f027fcbd3bfdf9564.ctex"]
+source_file="res://art/Another_Different_Stuff/Stop.png"
+dest_files=["res://.godot/imported/Stop.png-08ff15944f64c03bc298388a220cb7af.ctex"]
 
 [params]
 

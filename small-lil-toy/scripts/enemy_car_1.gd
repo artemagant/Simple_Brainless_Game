@@ -2,7 +2,7 @@ extends Area2D
 # explanation in the enemy_car_2.gd
 var speed = 25
 var path_follow:PathFollow2D
-var health = 5
+var health = 8
 var alive = true
 var earn = 15
 

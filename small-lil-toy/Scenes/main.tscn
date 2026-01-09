@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://li85w5026c1i"]
+[gd_scene load_steps=3 format=3 uid="uid://li85w5026c1i"]
 
 [ext_resource type="Script" uid="uid://ceqej4rdw3atv" path="res://scripts/main.gd" id="1_jjgbg"]
-[ext_resource type="PackedScene" uid="uid://8nh8ibn5bou2" path="res://Scenes/levels/level_1.tscn" id="2_bo1nx"]
 [ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="3_8gbba"]
 
 [node name="Root" type="Node2D"]
@@ -15,8 +14,6 @@ offset_top = -89.0
 offset_right = 540.0
 offset_bottom = 288.0
 color = Color(0, 0, 0, 1)
-
-[node name="level_root" parent="." instance=ExtResource("2_bo1nx")]
 
 [node name="Losse_screen" type="Label" parent="."]
 visible = false

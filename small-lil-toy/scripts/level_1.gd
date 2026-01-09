@@ -1,9 +1,9 @@
 extends Node2D
 
-var first_enemy_scene = preload("res://Scenes/Enemy_car_1.tscn")
-var second_enemy_scene = preload("res://Scenes/Enemy_car_2.tscn")
-var fird_enemy_scene = preload("res://Scenes/Enemy_car_3.tscn")
-var fourth_enemy_scene = preload("res://Scenes/Enemy_car_4.tscn")
+var first_enemy_scene := preload("res://Scenes/Enemy_car_1.tscn")
+var second_enemy_scene := preload("res://Scenes/enemy_car_2.tscn")
+var fird_enemy_scene := preload("res://Scenes/enemy_car_3.tscn")
+var fourth_enemy_scene := preload("res://Scenes/enemy_car_4.tscn")
 var bullet_scene := preload("res://Scenes/towers/bullet.tscn")
 var sniper_bullet_scene := preload("res://Scenes/towers/bullet_for_sniper.tscn")
 
@@ -15,7 +15,7 @@ var ghost_towers = {
 
 var tower_horse_scene := preload("res://Scenes/towers/tower_horse_1.tscn")
 var tower_soldier_scene := preload("res://Scenes/towers/tower_soldier_gun.tscn")
-var tower_soldier_sniper_scene = preload("res://Scenes/towers/tower_soldier_sniper.tscn")
+var tower_soldier_sniper_scene := preload("res://Scenes/towers/tower_soldier_sniper.tscn")
 
 @onready var Wave_Counter_Panel := $HUD/Wave_Counter
 @onready var Wave_Counter_Number := $HUD/Wave_Counter/CenterContainer/Number
@@ -26,7 +26,7 @@ func _ready() -> void:
 	_on_button_pouse_pressed()
 	# Change the wave panel size from current wave number, because idk
 	Wave_Counter_Panel.size.x = Wave_Counter_Number.size.x
-	$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+	$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
 	Data. speed_variation = 0
 	previous_speed = 5
 	RenderingServer. set_default_clear_color("37213B")
@@ -90,7 +90,6 @@ func start_wave(wave):
 		if wavee[0] is int and Data. speed_variation != 0:
 			# Spawn enemy of it's type
 			if wavee[0] == 1:
-				
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
 				var enemy = first_enemy_scene.instantiate()
@@ -120,7 +119,7 @@ func start_wave(wave):
 				Data. enemys += 1
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
-				var enemy = fourth_enemy_scene.instantiate()
+				var enemy = first_enemy_scene.instantiate()
 				enemy. setup(follow_path)
 				enemy. name = "enemy_car_2"
 				follow_path.add_child(enemy)
@@ -144,12 +143,12 @@ func start_wave(wave):
 	while true:
 		if Data. enemys < 0:
 			Data. wave += 1
-			Data. money += 50
+			Data. money += 25
 			Data. save()
 			if Data. speed_variation != 0:
 				previous_speed = Data. speed_variation
 				Data. speed_variation = 0
-				$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+				$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
 			break
 		else:
 			await get_tree().create_timer(0.1).timeout
@@ -174,9 +173,9 @@ func _on_button_pressed() -> void:
 		await tween. finished
 		direction *= -1
 		if direction == 1:
-			$HUD/game_need/Expand_Game_Need_Stuf/Button. icon = load("res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon_2.png")
+			$HUD/game_need/Expand_Game_Need_Stuf/Button. icon = load("res://art/Another_Different_Stuff/Expand_Game_Need_Staf_Button_Icon_2.png")
 		else:
-			$HUD/game_need/Expand_Game_Need_Stuf/Button.icon = load("res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon.png")
+			$HUD/game_need/Expand_Game_Need_Stuf/Button.icon = load("res://art/Another_Different_Stuff/Expand_Game_Need_Staf_Button_Icon.png")
 		can_tap = true
 
 # This button pause and unpause game
@@ -187,10 +186,10 @@ func _on_button_pouse_pressed() -> void:
 	if Data. speed_variation != 0:
 		previous_speed = Data. speed_variation
 		Data. speed_variation = 0
-		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
 	else:
 		Data. speed_variation = previous_speed
-		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Stop.png")
+		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Stop.png")
 		
 
 # This button slow down game
@@ -360,14 +359,40 @@ func no_pressed():
 		namee = 0
 		placed = null
 		$HUD/game_need/Submith_Buttons.visible = false
+func sell():
+	if selll or selll == 0:
+		for tower in $Towers.get_children():
+			# Check for every towers in node Towers and then check if it's position equal to positions we known
+			if tower. position == Data. towers_positions[selll]:
+				tower. queue_free()
+				var cost
+				if Data. placed_towers[selll] == 1:
+					cost = Data. towers_cost.horse
+				elif Data. placed_towers[selll] == 2:
+					cost = Data. towers_cost.soldier_gun
+				elif Data. placed_towers[selll] == 3:
+					cost = Data. towers_cost.soldier_sniper
+				Data.money += cost/1.7
+				Data. placed_towers[selll] = 0
+				selll = null
+				$HUD/game_need/Sold_Buttons.visible = false
+				return
+func no_deal():
+	selll = null
+	$HUD/game_need/Sold_Buttons.visible = false
+
 var placed
 var type
 var poss
 var namee
 var pressed = false
+var selll = null
+
 func _on_place_button_1_pressed() -> void:
-	
 	if Data. placed_towers[0]:
+		no_pressed()
+		selll = 0
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -409,6 +434,9 @@ func _on_place_button_1_pressed() -> void:
 	pressed = true
 func _on_place_button_2_pressed() -> void:
 	if Data. placed_towers[1]:
+		no_pressed()
+		selll = 1
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -450,6 +478,9 @@ func _on_place_button_2_pressed() -> void:
 	pressed = true
 func _on_place_button_3_pressed() -> void:
 	if Data. placed_towers[2]:
+		no_pressed()
+		selll = 2
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -491,6 +522,9 @@ func _on_place_button_3_pressed() -> void:
 	pressed = true
 func _on_place_button_4_pressed() -> void:
 	if Data. placed_towers[3]:
+		no_pressed()
+		selll = 3
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -532,6 +566,9 @@ func _on_place_button_4_pressed() -> void:
 	pressed = true
 func _on_place_button_5_pressed() -> void:
 	if Data. placed_towers[4]:
+		no_pressed()
+		selll = 4
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -573,6 +610,9 @@ func _on_place_button_5_pressed() -> void:
 	pressed = true
 func _on_place_button_6_pressed() -> void:
 	if Data. placed_towers[5]:
+		no_pressed()
+		selll = 5
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -614,6 +654,9 @@ func _on_place_button_6_pressed() -> void:
 	pressed = true
 func _on_place_button_7_pressed() -> void:
 	if Data. placed_towers[6]:
+		no_pressed()
+		selll = 6
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()
@@ -655,6 +698,9 @@ func _on_place_button_7_pressed() -> void:
 	pressed = true
 func _on_place_button_8_pressed() -> void:
 	if Data. placed_towers[7]:
+		no_pressed()
+		selll = 7
+		$HUD/game_need/Sold_Buttons.visible = true
 		return
 	if pressed:
 		var children = get_children()

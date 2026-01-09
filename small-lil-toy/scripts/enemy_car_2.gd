@@ -2,9 +2,9 @@ extends Area2D
 
 var speed = 25
 var path_follow:PathFollow2D
-var health = 9
+var health = 12
 var alive = true
-var earn = 45
+var earn = 25
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

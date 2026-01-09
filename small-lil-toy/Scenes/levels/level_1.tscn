@@ -3,21 +3,21 @@
 [ext_resource type="Script" uid="uid://c00572iwly3hf" path="res://scripts/level_1.gd" id="1_mkwgf"]
 [ext_resource type="Texture2D" uid="uid://c2lwx7a67g8ys" path="res://art/TileSets/TileSet_Level_1.png" id="2_cru1l"]
 [ext_resource type="PackedScene" uid="uid://4fsqgch4mfw" path="res://Scenes/ui/player_camera.tscn" id="5_0lml3"]
-[ext_resource type="Texture2D" uid="uid://c3pede62ywdvq" path="res://art/Another Different Stuff/heart.png" id="6_lpshy"]
-[ext_resource type="Texture2D" uid="uid://bhwe42alk3ca5" path="res://art/Another Different Stuff/Money_Bug.png" id="6_onyy7"]
+[ext_resource type="Texture2D" uid="uid://c3pede62ywdvq" path="res://art/Another_Different_Stuff/heart.png" id="6_lpshy"]
+[ext_resource type="Texture2D" uid="uid://bhwe42alk3ca5" path="res://art/Another_Different_Stuff/Money_Bug.png" id="6_onyy7"]
 [ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="6_qyddi"]
 [ext_resource type="Texture2D" uid="uid://yv6tpe3wj1rv" path="res://art/Towers/horse/Tower_Horse_idle_1.png" id="7_bk5qg"]
-[ext_resource type="Texture2D" uid="uid://cb82xjgti2sae" path="res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon.png" id="7_qek6e"]
-[ext_resource type="Texture2D" uid="uid://bucnao6o1u6ln" path="res://art/Another Different Stuff/Slow_Down.png" id="7_tlryv"]
-[ext_resource type="Texture2D" uid="uid://bexlns32s6ia6" path="res://art/Another Different Stuff/Speed_Up.png" id="8_dsuda"]
+[ext_resource type="Texture2D" uid="uid://cb82xjgti2sae" path="res://art/Another_Different_Stuff/Expand_Game_Need_Staf_Button_Icon.png" id="7_qek6e"]
+[ext_resource type="Texture2D" uid="uid://bucnao6o1u6ln" path="res://art/Another_Different_Stuff/Slow_Down.png" id="7_tlryv"]
+[ext_resource type="Texture2D" uid="uid://bexlns32s6ia6" path="res://art/Another_Different_Stuff/Speed_Up.png" id="8_dsuda"]
 [ext_resource type="Texture2D" uid="uid://bbxw3063bp8x3" path="res://art/Towers/soldier_gun/Tower_Soldier_Pistol_idle_1.png" id="8_iu068"]
-[ext_resource type="Texture2D" uid="uid://7rwiuoc0hebd" path="res://art/Another Different Stuff/Play.png" id="8_s5b24"]
-[ext_resource type="Texture2D" uid="uid://uu7h3oxmvryb" path="res://art/Another Different Stuff/Settings_Buttot_Icon.png" id="11_sskdo"]
-[ext_resource type="Texture2D" uid="uid://doeymv5e8pq55" path="res://art/Another Different Stuff/cross.png" id="12_041ro"]
+[ext_resource type="Texture2D" uid="uid://7rwiuoc0hebd" path="res://art/Another_Different_Stuff/Play.png" id="8_s5b24"]
+[ext_resource type="Texture2D" uid="uid://uu7h3oxmvryb" path="res://art/Another_Different_Stuff/Settings_Buttot_Icon.png" id="11_sskdo"]
+[ext_resource type="Texture2D" uid="uid://doeymv5e8pq55" path="res://art/Another_Different_Stuff/cross.png" id="12_041ro"]
 [ext_resource type="Texture2D" uid="uid://bwrohop5wn4go" path="res://art/Towers/soldier_sniper/Tower_Soldier_Sniper.png" id="12_n3ge2"]
 [ext_resource type="Texture2D" uid="uid://b281c1rxjyv1f" path="res://art/Enemys/Portal_Enemys.png" id="13_n8oda"]
 [ext_resource type="Texture2D" uid="uid://cgavpuspah7se" path="res://art/Towers/House.png" id="14_ee4lj"]
-[ext_resource type="Texture2D" uid="uid://dytgo5elkmqd" path="res://art/Another Different Stuff/Check_mark.png" id="18_v6uk5"]
+[ext_resource type="Texture2D" uid="uid://dytgo5elkmqd" path="res://art/Another_Different_Stuff/Check_mark.png" id="18_v6uk5"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0lml3"]
 texture = ExtResource("2_cru1l")
@@ -604,6 +604,48 @@ offset_bottom = 21.0
 focus_mode = 0
 icon = ExtResource("12_041ro")
 
+[node name="Sold_Buttons" type="Panel" parent="HUD/game_need"]
+visible = false
+offset_left = 265.795
+offset_top = 99.257
+offset_right = 305.795
+offset_bottom = 119.256996
+theme_override_styles/panel = SubResource("StyleBoxFlat_qek6e")
+
+[node name="Sell" type="Panel" parent="HUD/game_need/Sold_Buttons"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 19.0
+offset_bottom = 19.0
+
+[node name="Button" type="Button" parent="HUD/game_need/Sold_Buttons/Sell"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 21.0
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("6_onyy7")
+
+[node name="No" type="Panel" parent="HUD/game_need/Sold_Buttons"]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 1.0
+offset_right = 39.0
+offset_bottom = 19.0
+
+[node name="Button" type="Button" parent="HUD/game_need/Sold_Buttons/No"]
+texture_filter = 1
+layout_mode = 0
+offset_left = -3.0
+offset_top = -3.0
+offset_right = 21.0
+offset_bottom = 21.0
+focus_mode = 0
+icon = ExtResource("12_041ro")
+
 [node name="Settings" type="Panel" parent="HUD"]
 visible = false
 anchors_preset = 15
@@ -791,6 +833,8 @@ theme_override_font_sizes/font_size = 5
 [connection signal="pressed" from="HUD/game_need/Setting_Button/Button" to="." method="_on_button_settings_pressed"]
 [connection signal="pressed" from="HUD/game_need/Submith_Buttons/Yes/Button" to="." method="yes_pressed"]
 [connection signal="pressed" from="HUD/game_need/Submith_Buttons/No/Button" to="." method="no_pressed"]
+[connection signal="pressed" from="HUD/game_need/Sold_Buttons/Sell/Button" to="." method="sell"]
+[connection signal="pressed" from="HUD/game_need/Sold_Buttons/No/Button" to="." method="no_deal"]
 [connection signal="pressed" from="HUD/Settings/Button_Return_To_The_Menu/button" to="." method="_on_button_return_to_the_menu_pressed"]
 [connection signal="pressed" from="HUD/Settings/Button_Close_Settings/Button" to="." method="_on_button_close_settings_pressed"]
 [connection signal="pressed" from="Place_Buttons/Place_Button_1" to="." method="_on_place_button_1_pressed"]

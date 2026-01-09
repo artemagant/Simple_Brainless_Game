@@ -2,36 +2,35 @@ extends Node2D
 
 @onready var fade = $Fade
 var current_level = null
+const LEVEL_1 = preload("res://Scenes/levels/level_1.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	Data. enemys = -1
 	Data. load_game()
-	current_level = get_node("level_root")
+	current_level = get_node_or_null("level_root")
 	fade.visible = true
-	load_level(1)
+	await load_level()
 	await _fade(0.0)
 
 func _process(_delta: float) -> void:
 	if Data. player_health <= 0:
-		Data. player_health = 1
+		Data. player_health = 0
 		Data. speed_variation = 0
 		await _fade(1.0)
-		current_level.queue_free()
+		current_level = get_node_or_null("level_root")
+		if current_level:
+			current_level.queue_free()
 		$Losse_screen.visible = true
 		await get_tree().create_timer(1.0).timeout
-		if Data. record_wave > Data. wave:
-			Data. record_wave = Data. wave
-		Data. wave = 1
-		Data. player_health = 75
-		Data. save()
+		
+		Data. reset_game()
 		
 		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
-func load_level(level):
+func load_level():
 	if current_level:
 		current_level.queue_free()
-	var level_path = "res://Scenes/levels/level_%s.tscn" %level
-	current_level = load(level_path).instantiate()
+	current_level = LEVEL_1.instantiate()
 	add_child(current_level)
 	current_level.name = "level_root"
 # Create a fade effect 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cf7x2sjby12dq"
-path="res://.godot/imported/Expand_Game_Need_Staf_Button_Icon_2.png-a8d927b4cbb4ebd2caa48d410f2f712f.ctex"
+uid="uid://bhwe42alk3ca5"
+path="res://.godot/imported/Money_Bug.png-43a627ad87024c9ecb4c7efae2ac78fc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Another Different Stuff/Expand_Game_Need_Staf_Button_Icon_2.png"
-dest_files=["res://.godot/imported/Expand_Game_Need_Staf_Button_Icon_2.png-a8d927b4cbb4ebd2caa48d410f2f712f.ctex"]
+source_file="res://art/Another_Different_Stuff/Money_Bug.png"
+dest_files=["res://.godot/imported/Money_Bug.png-43a627ad87024c9ecb4c7efae2ac78fc.ctex"]
 
 [params]
 

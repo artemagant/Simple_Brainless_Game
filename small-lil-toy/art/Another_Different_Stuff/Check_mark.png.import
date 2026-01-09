@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bucnao6o1u6ln"
-path="res://.godot/imported/Slow_Down.png-c3326a1b661c732bf436fd28936748f8.ctex"
+uid="uid://dytgo5elkmqd"
+path="res://.godot/imported/Check_mark.png-1a749aac6787024c01c8ea91f1a72959.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://art/Another Different Stuff/Slow_Down.png"
-dest_files=["res://.godot/imported/Slow_Down.png-c3326a1b661c732bf436fd28936748f8.ctex"]
+source_file="res://art/Another_Different_Stuff/Check_mark.png"
+dest_files=["res://.godot/imported/Check_mark.png-1a749aac6787024c01c8ea91f1a72959.ctex"]
 
 [params]
 
