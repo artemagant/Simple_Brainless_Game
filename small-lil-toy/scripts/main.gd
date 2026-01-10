@@ -22,7 +22,8 @@ func _process(_delta: float) -> void:
 		await get_tree().create_timer(1.0).timeout
 		Data. reset_game()
 		get_tree().change_scene_to_file("res://Scenes/scrolling_bar_loose_screan.tscn")
-	if Data. wave > Data. max_wave:
+	if Data. win:
+		Data. win = false
 		await _fade(1.0)
 		Data. reset_game()
 		get_tree().change_scene_to_file("res://Scenes/scrolling_bar_win_screan.tscn")

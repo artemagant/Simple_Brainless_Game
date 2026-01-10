@@ -183,7 +183,7 @@ func start_wave(wave):
 		else: 
 			if Data. speed_variation == 0:
 				while Data. speed_variation == 0:
-					await get_tree().create_timer(0.1).timeout
+					await get_tree().create_timer(0.005).timeout
 	
 	# Wait until all of the enemys dyed
 	while true:
@@ -196,14 +196,19 @@ func start_wave(wave):
 		if enemys == 0:
 			for enemy in childrens:
 				enemy. queue_free()
-			Data. wave += 1
+			if Data. wave < Data. max_wave:
+				Data. wave += 1
+			else:
+				Data. win = true
 			Data. money += 25
 			Data. save()
 			if Data. speed_variation != 0:
 				previous_speed = Data. speed_variation
 				Data. speed_variation = 0
 				$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
-				break
+			$Button.pitch_scale = randf_range(0.8, 1.2)
+			$Button.play()
+			break
 
 	# After wave we call the function, that call this function again, but with little delay 
 	wave_couldown()
@@ -216,6 +221,8 @@ func wave_couldown():
 var direction = -1
 var can_tap = true
 func _on_button_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if can_tap:
 		can_tap = false
 		var tween = create_tween()
@@ -228,10 +235,13 @@ func _on_button_pressed() -> void:
 		else:
 			$HUD/game_need/Expand_Game_Need_Stuf/Button.icon = load("res://art/Another_Different_Stuff/Expand_Game_Need_Staf_Button_Icon.png")
 		can_tap = true
+		
 
 # This button pause and unpause game
 var previous_speed
 func _on_button_pouse_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if settings:
 		return
 	if Data. speed_variation != 0:
@@ -241,23 +251,29 @@ func _on_button_pouse_pressed() -> void:
 	else:
 		Data. speed_variation = previous_speed
 		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Stop.png")
-		
-
+	
 # This button slow down game
 func _on_button_slow_down_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. speed_variation > 1:
 		Data. speed_variation -= 1
+	
 
 # This button speed up game
 func _on_button_speed_up_pressed() -> void:
 	if Data. speed_variation != 0 and Data. speed_variation < 10:
 		Data. speed_variation += 1
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 
 
 
 # Turn on settings panel
 var settings = false
 func _on_button_settings_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if settings:
 		return
 	settings = true
@@ -269,10 +285,14 @@ func _on_button_settings_pressed() -> void:
 
 # Return in the menu
 func _on_button_return_to_the_menu_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	get_tree().call_deferred("change_scene_to_file", "res://Scenes/menu.tscn")
 
 # Turn off settings panel
 func _on_button_close_settings_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if settings:
 		settings = false
 		$HUD/Settings. visible = false
@@ -283,6 +303,8 @@ func _on_button_close_settings_pressed() -> void:
 #
 var buy_tower_horse_button_pressed = false
 func _on_button_to_buy_horse_tower_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if buy_tower_horse_button_pressed:
 		Data. place_tower_index = 0
 		buy_tower_horse_button_pressed = false
@@ -291,9 +313,12 @@ func _on_button_to_buy_horse_tower_pressed() -> void:
 		buy_tower_horse_button_pressed = true
 		buy_tower_soldier_button_pressed = false
 		buy_tower_soldier_sniper_button_pressed = false
+	
 
 var buy_tower_soldier_button_pressed = false
 func _on_button_to_buy_soldier_tower_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if buy_tower_soldier_button_pressed:
 		Data. place_tower_index = 0
 		buy_tower_soldier_button_pressed = false
@@ -302,10 +327,13 @@ func _on_button_to_buy_soldier_tower_pressed() -> void:
 		buy_tower_soldier_button_pressed = true
 		buy_tower_soldier_sniper_button_pressed = false
 		buy_tower_horse_button_pressed = false
+	
 		
 
 var buy_tower_soldier_sniper_button_pressed = false
 func _on_button_to_buy_soldier_sniper_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if buy_tower_soldier_sniper_button_pressed:
 		Data. place_tower_index = 0
 		buy_tower_soldier_sniper_button_pressed = false
@@ -314,6 +342,7 @@ func _on_button_to_buy_soldier_sniper_pressed() -> void:
 		buy_tower_soldier_sniper_button_pressed = true
 		buy_tower_horse_button_pressed = false
 		buy_tower_soldier_button_pressed = false
+	
 
 #
 # Every place buttons (8)
@@ -344,6 +373,8 @@ func submith():
 		$HUD/game_need/Submith_Buttons.visible = true
 # If button yes was pressed
 func yes_pressed():
+	$Place.pitch_scale = randf_range(0.4, 0.7)
+	$Place.play()
 	# it need for change array of towers
 	var index
 	if placed:
@@ -396,6 +427,8 @@ func yes_pressed():
 	namee = 0
 	placed = null
 func no_pressed():
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if pressed:
 		# Delete the ghost
 		var children = get_children()
@@ -412,6 +445,8 @@ func no_pressed():
 		$HUD/game_need/Submith_Buttons.visible = false
 func sell():
 	if selll or selll == 0:
+		$Sell.pitch_scale = randf_range(0.8, 1.2)
+		$Sell.play()
 		for tower in $Towers.get_children():
 			# Check for every towers in node Towers and then check if it's position equal to positions we known
 			if tower. position == Data. towers_positions[selll]:
@@ -429,6 +464,8 @@ func sell():
 				$HUD/game_need/Sold_Buttons.visible = false
 				return
 func no_deal():
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	selll = null
 	$HUD/game_need/Sold_Buttons.visible = false
 
@@ -440,6 +477,8 @@ var pressed = false
 var selll = null
 
 func _on_place_button_1_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[0]:
 		no_pressed()
 		selll = 0
@@ -484,6 +523,8 @@ func _on_place_button_1_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_2_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[1]:
 		no_pressed()
 		selll = 1
@@ -528,6 +569,8 @@ func _on_place_button_2_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_3_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[2]:
 		no_pressed()
 		selll = 2
@@ -572,6 +615,8 @@ func _on_place_button_3_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_4_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[3]:
 		no_pressed()
 		selll = 3
@@ -616,6 +661,8 @@ func _on_place_button_4_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_5_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[4]:
 		no_pressed()
 		selll = 4
@@ -660,6 +707,8 @@ func _on_place_button_5_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_6_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[5]:
 		no_pressed()
 		selll = 5
@@ -704,6 +753,8 @@ func _on_place_button_6_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_7_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[6]:
 		no_pressed()
 		selll = 6
@@ -748,6 +799,8 @@ func _on_place_button_7_pressed() -> void:
 		submith()
 	pressed = true
 func _on_place_button_8_pressed() -> void:
+	$Button.pitch_scale = randf_range(0.8, 1.2)
+	$Button.play()
 	if Data. placed_towers[7]:
 		no_pressed()
 		selll = 7

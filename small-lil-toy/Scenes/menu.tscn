@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cvd05bb1vcgvw"]
+[gd_scene load_steps=5 format=3 uid="uid://cvd05bb1vcgvw"]
 
 [ext_resource type="Script" uid="uid://dnkobvvaiaoi4" path="res://scripts/menu.gd" id="1_xhh6f"]
+[ext_resource type="Texture2D" uid="uid://c7qmikd0nq73v" path="res://art/Another_Different_Stuff/Brown.png" id="2_cayip"]
 [ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="2_xhh6f"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1rerr"]
@@ -25,10 +26,11 @@ offset_right = 320.0
 offset_bottom = 192.0
 color = Color(0, 0, 0, 1)
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="TextureRect" parent="."]
+texture_filter = 1
 offset_right = 322.0
 offset_bottom = 193.0
-color = Color(0.2552233, 0.2552233, 0.25522327, 1)
+texture = ExtResource("2_cayip")
 
 [node name="Play_Button" type="Panel" parent="."]
 anchors_preset = 8

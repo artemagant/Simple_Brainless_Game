@@ -11,7 +11,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	# Look at first enemy and attacks it
 	if enemys. size() > 0:
-		$Top.look_at(enemys[0].global_position)
+		var progressis: Array
+		for enemy in enemys:
+			progressis. append(enemy. progress)
+		var new_progressis = progressis. duplicate()
+		new_progressis. sort()
+		new_progressis.reverse()
+		var highest_index = progressis. find(new_progressis[0])
+		if highest_index:
+			$Top.look_at(enemys[highest_index].global_position)
+		else:
+			$Top.look_at(enemys[0].global_position)
 	
 	# The it's no enemys, look straight 
 	if enemys. size() == 0:
@@ -33,9 +43,11 @@ func Change_wait_time():
 		$Attack_couldown.wait_time = 1.2 / Data. speed_multiplayer
 	else:
 		while Data. speed_multiplayer == 0:
-			await get_tree().create_timer(0.01).timeout
+			await get_tree().create_timer(0.005).timeout
 
 func _on_attack_couldown_timeout() -> void:
 	# Can attack if timer goes 
-	if can_attack == false:
+	if can_attack == false and enemys and Data. speed_variation != 0:
+		$Attack.pitch_scale = randf_range(1.8, 2.5)
+		$Attack.play()
 		can_attack = true

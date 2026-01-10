@@ -9,7 +9,17 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	if enemys. size() > 0:
-		$Top.look_at(enemys[0].global_position)
+		var progressis: Array
+		for enemy in enemys:
+			progressis. append(enemy. progress)
+		var new_progressis = progressis. duplicate()
+		new_progressis. sort()
+		new_progressis.reverse()
+		var highest_index = progressis. find(new_progressis[0])
+		if highest_index:
+			$Top.look_at(enemys[highest_index].global_position)
+		else:
+			$Top.look_at(enemys[0].global_position)
 		
 	if enemys. size() == 0:
 		$Top.rotation = 0
@@ -24,10 +34,12 @@ func Change_wait_time():
 		$Attack_couldown.wait_time = 0.5 / Data. speed_multiplayer
 	else:
 		while Data. speed_multiplayer == 0:
-			await get_tree().create_timer(0.01).timeout
+			await get_tree().create_timer(0.005).timeout
 
 
 func _on_attack_couldown_timeout() -> void:
 	var direction = Vector2. DOWN. rotated($Top.rotation).normalized()
 	if enemys and Data. speed_multiplayer:
+		$Shoot.pitch_scale = randf_range(2.0, 4.0)
+		$Shoot.play()
 		shoot. emit(position + direction*-1.1, $Top.rotation-PI/2, Data. Bullet. SIGNAL)

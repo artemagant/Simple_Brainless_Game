@@ -5,13 +5,14 @@ var path_follow:PathFollow2D
 var health = 8
 var alive = true
 var earn = 5
-
+var progress
 func _ready() -> void:
 	pass
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	if alive:
 		path_follow.progress += speed*delta*Data. speed_multiplayer
+		progress = path_follow.progress
 		if path_follow.progress_ratio >= 0.99:
 			queue_free()
 			Data. player_health -= 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=44 format=4 uid="uid://8nh8ibn5bou2"]
+[gd_scene load_steps=49 format=4 uid="uid://8nh8ibn5bou2"]
 
 [ext_resource type="Script" uid="uid://c00572iwly3hf" path="res://scripts/level_1.gd" id="1_mkwgf"]
 [ext_resource type="Texture2D" uid="uid://c2lwx7a67g8ys" path="res://art/TileSets/TileSet_Level_1.png" id="2_cru1l"]
@@ -17,7 +17,12 @@
 [ext_resource type="Texture2D" uid="uid://bwrohop5wn4go" path="res://art/Towers/soldier_sniper/Tower_Soldier_Sniper.png" id="12_n3ge2"]
 [ext_resource type="Texture2D" uid="uid://b281c1rxjyv1f" path="res://art/Enemys/Portal_Enemys.png" id="13_n8oda"]
 [ext_resource type="Texture2D" uid="uid://cgavpuspah7se" path="res://art/Towers/House.png" id="14_ee4lj"]
+[ext_resource type="Script" uid="uid://bkv657v11ap6j" path="res://scripts/sound_control.gd" id="17_dsxye"]
+[ext_resource type="Texture2D" uid="uid://c53tkx2badfb4" path="res://art/Another_Different_Stuff/Plus.png" id="17_wxxdo"]
+[ext_resource type="Texture2D" uid="uid://boxs8x4mavh3" path="res://art/Another_Different_Stuff/Minus.png" id="18_dsxye"]
 [ext_resource type="Texture2D" uid="uid://dytgo5elkmqd" path="res://art/Another_Different_Stuff/Check_mark.png" id="18_v6uk5"]
+[ext_resource type="AudioStream" uid="uid://cqbgpb7nyxd14" path="res://sounds/butyon.wav" id="19_flpb6"]
+[ext_resource type="AudioStream" uid="uid://dioni0i6faw7o" path="res://sounds/sell.mp3" id="20_n3ge2"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_0lml3"]
 texture = ExtResource("2_cru1l")
@@ -564,9 +569,9 @@ icon = ExtResource("11_sskdo")
 
 [node name="Submith_Buttons" type="Panel" parent="HUD/game_need"]
 visible = false
-offset_left = 265.795
+offset_left = 275.818
 offset_top = 124.846
-offset_right = 305.795
+offset_right = 315.818
 offset_bottom = 144.84604
 theme_override_styles/panel = SubResource("StyleBoxFlat_qek6e")
 
@@ -606,9 +611,9 @@ icon = ExtResource("12_041ro")
 
 [node name="Sold_Buttons" type="Panel" parent="HUD/game_need"]
 visible = false
-offset_left = 265.795
+offset_left = 275.645
 offset_top = 99.257
-offset_right = 305.795
+offset_right = 315.645
 offset_bottom = 119.256996
 theme_override_styles/panel = SubResource("StyleBoxFlat_qek6e")
 
@@ -667,9 +672,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -45.0
-offset_top = -25.0
-offset_right = 45.000153
-offset_bottom = 24.999924
+offset_top = -55.989
+offset_right = 45.000122
+offset_bottom = -5.989151
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_n8oda")
@@ -691,7 +696,8 @@ grow_vertical = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("6_qyddi")
 theme_override_font_sizes/font_size = 42
-text = "Return"
+text = "Return
+To Menu"
 flat = true
 
 [node name="Button_Close_Settings" type="Panel" parent="HUD/Settings"]
@@ -715,6 +721,47 @@ offset_right = 21.442
 offset_bottom = 21.353
 focus_mode = 0
 icon = ExtResource("12_041ro")
+
+[node name="Sound_Control" type="Node2D" parent="HUD/Settings"]
+position = Vector2(120, 96)
+script = ExtResource("17_dsxye")
+metadata/_edit_group_ = true
+
+[node name="SFX" type="Panel" parent="HUD/Settings/Sound_Control"]
+offset_left = -13.258
+offset_right = 66.742
+offset_bottom = 40.0
+
+[node name="Minus" type="Button" parent="HUD/Settings/Sound_Control/SFX"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 5.0
+offset_top = 7.0
+offset_right = 29.0
+offset_bottom = 31.0
+focus_mode = 0
+icon = ExtResource("18_dsxye")
+
+[node name="Plus" type="Button" parent="HUD/Settings/Sound_Control/SFX"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 51.0
+offset_top = 7.0
+offset_right = 75.0
+offset_bottom = 31.0
+focus_mode = 0
+icon = ExtResource("17_wxxdo")
+
+[node name="Label" type="Label" parent="HUD/Settings/Sound_Control/SFX"]
+texture_filter = 1
+layout_mode = 0
+offset_left = 21.577
+offset_top = -7.706
+offset_right = 61.577
+offset_bottom = 16.294
+theme_override_fonts/font = ExtResource("6_qyddi")
+theme_override_font_sizes/font_size = 24
+text = "SFX"
 
 [node name="Border" type="Area2D" parent="."]
 
@@ -823,6 +870,20 @@ offset_bottom = 120.0
 focus_mode = 0
 theme_override_font_sizes/font_size = 5
 
+[node name="Button" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_flpb6")
+volume_db = -15.0
+pitch_scale = 1.8
+
+[node name="Sell" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("20_n3ge2")
+volume_db = -15.0
+
+[node name="Place" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("19_flpb6")
+volume_db = -15.0
+pitch_scale = 0.7
+
 [connection signal="pressed" from="HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower/Button" to="." method="_on_button_to_buy_horse_tower_pressed"]
 [connection signal="pressed" from="HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun/Button" to="." method="_on_button_to_buy_soldier_tower_pressed"]
 [connection signal="pressed" from="HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper/Button" to="." method="_on_button_to_buy_soldier_sniper_pressed"]
@@ -837,6 +898,8 @@ theme_override_font_sizes/font_size = 5
 [connection signal="pressed" from="HUD/game_need/Sold_Buttons/No/Button" to="." method="no_deal"]
 [connection signal="pressed" from="HUD/Settings/Button_Return_To_The_Menu/button" to="." method="_on_button_return_to_the_menu_pressed"]
 [connection signal="pressed" from="HUD/Settings/Button_Close_Settings/Button" to="." method="_on_button_close_settings_pressed"]
+[connection signal="pressed" from="HUD/Settings/Sound_Control/SFX/Minus" to="HUD/Settings/Sound_Control" method="_on_minus_pressed"]
+[connection signal="pressed" from="HUD/Settings/Sound_Control/SFX/Plus" to="HUD/Settings/Sound_Control" method="_on_plus_pressed"]
 [connection signal="pressed" from="Place_Buttons/Place_Button_1" to="." method="_on_place_button_1_pressed"]
 [connection signal="pressed" from="Place_Buttons/Place_Button_2" to="." method="_on_place_button_2_pressed"]
 [connection signal="pressed" from="Place_Buttons/Place_Button_3" to="." method="_on_place_button_3_pressed"]

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bi3mbgqo3muqx"]
+[gd_scene load_steps=7 format=3 uid="uid://bi3mbgqo3muqx"]
 
 [ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_x16cs"]
 [ext_resource type="Script" uid="uid://bnledj6phaadj" path="res://scripts/tower_soldier_sniper.gd" id="2_x16cs"]
 [ext_resource type="Texture2D" uid="uid://bwrohop5wn4go" path="res://art/Towers/soldier_sniper/Tower_Soldier_Sniper.png" id="3_x16cs"]
+[ext_resource type="AudioStream" uid="uid://dj4nhmo2mggg0" path="res://sounds/sniper_shot.mp3" id="4_bqebw"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_qfc2c"]
 animations = [{
@@ -31,5 +32,10 @@ debug_color = Color(0.11372549, 0.64705884, 0, 0.26666668)
 
 [node name="Attack_couldown" parent="." index="3"]
 wait_time = 1.5
+
+[node name="Shoot" type="AudioStreamPlayer2D" parent="." index="4"]
+stream = ExtResource("4_bqebw")
+volume_db = -25.0
+pitch_scale = 2.0
 
 [connection signal="timeout" from="Attack_couldown" to="." method="_on_attack_couldown_timeout"]

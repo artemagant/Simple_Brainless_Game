@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dodo1erlqhjla"]
+[gd_scene load_steps=5 format=3 uid="uid://dodo1erlqhjla"]
 
 [ext_resource type="PackedScene" uid="uid://c8cuvnrvxlsub" path="res://Scenes/towers/tower.tscn" id="1_8j216"]
-[ext_resource type="Script" uid="uid://bnledj6phaadj" path="res://scripts/tower_soldier_sniper.gd" id="2_sjao2"]
 [ext_resource type="Texture2D" uid="uid://bwrohop5wn4go" path="res://art/Towers/soldier_sniper/Tower_Soldier_Sniper.png" id="3_5owuh"]
 [ext_resource type="Texture2D" uid="uid://ct85w3yd850rv" path="res://art/Towers/soldier_sniper/Attack_Radius_Soldier_Sniper_Tower.png" id="3_sjao2"]
 
@@ -18,7 +17,7 @@ animations = [{
 
 [node name="Tower_soldier_sniper" instance=ExtResource("1_8j216")]
 modulate = Color(1, 1, 1, 0.39215687)
-script = ExtResource("2_sjao2")
+script = null
 
 [node name="Sprite2D" type="Sprite2D" parent="." index="0"]
 texture = ExtResource("3_sjao2")

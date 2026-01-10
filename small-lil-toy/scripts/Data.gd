@@ -12,6 +12,8 @@ var money = 150
 var money_multiplayer = 1.0
 var place_tower_index = 0
 var max_wave = 15
+var win = false
+var sfx_volum = 0
 
 var placed_towers = [0, 0, 0, 0, 0, 0, 0, 0]
 var towers_positions = [Vector2(0, 60), Vector2(72, 108), Vector2(72, 20), Vector2(160,76), Vector2(128, 12),  Vector2(208, 12), Vector2(280, 60),Vector2(280, 108)]
@@ -78,7 +80,7 @@ func save(): # Function game save
 		return
 	
 	var game_data = { # Every Varyebles, that I will save
-		"wave": wave, 
+		"wave": int(wave), 
 		"record_wave": record_wave,
 		"money_multiplayer": money_multiplayer,
 		"player_health": player_health,
@@ -88,6 +90,19 @@ func save(): # Function game save
 	var json_string = JSON. stringify(game_data)
 	save_file.store_line(json_string)
 	save_file.close()
+	
+# Saving volume 
+func save_sfx():
+	var save_file = FileAccess. open(PATH_TO_SAVE_FILE, FileAccess.WRITE)
+	if save_file == null:
+		print_debug("Error on loading files")
+		return
+	var SFX = {"sfx_volum":sfx_volum}
+	var json_string = JSON. stringify(SFX)
+	save_file.store_line(json_string)
+	save_file.close()
+	
+	
 # Loading every varyebles from data
 func load_game():
 	if not FileAccess. file_exists(PATH_TO_SAVE_FILE):
@@ -117,15 +132,18 @@ func load_game():
 	record_wave = data. get("record_wave", 0)
 	player_health = data. get("player_health", 10)
 	money = data. get("money", 150)
-	money_multiplayer = data. get("money_multiplayer", 5.0)
+	money_multiplayer = data. get("money_multiplayer", 1.0)
 	placed_towers = data. get("placed_towers", [0,0,0,0,0,0,0,0])
+	sfx_volum = data. get("sfx_volum", 0)
+	AudioServer. set_bus_volume_db(0, sfx_volum)
 # function for reset the game
 func reset_game():
 	if record_wave > wave:
 		record_wave = wave
 	wave = 1
+	win = false
 	money = 150
-	money_multiplayer = 1
+	money_multiplayer = 1.0
 	player_health = 10
 	placed_towers = [0,0,0,0,0,0,0,0]
 	save()
