@@ -22,7 +22,7 @@ func _process(_delta: float) -> void:
 
 func Change_wait_time():
 	if Data. speed_multiplayer != 0:
-		$Attack_couldown.wait_time = 2.0 / Data. speed_multiplayer
+		$Attack_couldown.wait_time = 1.5 / Data. speed_multiplayer
 	else:
 		while Data. speed_multiplayer == 0:
 			await get_tree().create_timer(0.01).timeout

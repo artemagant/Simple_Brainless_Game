@@ -4,6 +4,11 @@ var first_enemy_scene := preload("res://Scenes/Enemy_car_1.tscn")
 var second_enemy_scene := preload("res://Scenes/enemy_car_2.tscn")
 var fird_enemy_scene := preload("res://Scenes/enemy_car_3.tscn")
 var fourth_enemy_scene := preload("res://Scenes/enemy_car_4.tscn")
+var labubu_smile_scene := preload("res://Scenes/enemy_labubu_smile.tscn")
+var labubu_evil_scene := preload("res://Scenes/enemy_labubu_evil.tscn")
+var phone_scene := preload("res://Scenes/enemy_phone.tscn")
+var laptop_scene := preload("res://Scenes/enemy_laptop.tscn")
+var computer_boss_scene := preload("res://Scenes/enemy_computer_boss.tscn")
 var bullet_scene := preload("res://Scenes/towers/bullet.tscn")
 var sniper_bullet_scene := preload("res://Scenes/towers/bullet_for_sniper.tscn")
 
@@ -56,6 +61,7 @@ func _process(_delta: float) -> void:
 		$HUD/game_need/Towers_Manager/Button_To_Buy_Horse_Tower.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Gun.modulate = Color(1.0, 1.0, 1.0, 1.0)
 		$HUD/game_need/Towers_Manager/Button_To_Buy_Soldier_Sniper.modulate = color
+	
 
 func create_bullet(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
 	# idk wthitt, but I trust the guide guy
@@ -75,73 +81,121 @@ func start_wave(wave):
 	var wavee:Array
 	# Take the wave content from current wave
 	if wave == 1:
-		wavee = Data.wave_content_level_1.wave_1.duplicate()
+		wavee = Data.wave_content_level_1.wave_1
 	elif wave == 2:
-		wavee = Data. wave_content_level_1.wave_2.duplicate()
+		wavee = Data. wave_content_level_1.wave_2
 	elif wave == 3:
-		wavee = Data. wave_content_level_1.wave_3.duplicate()
+		wavee = Data. wave_content_level_1.wave_3
 	elif wave == 4:
-		wavee = Data. wave_content_level_1.wave_4.duplicate()
+		wavee = Data. wave_content_level_1.wave_4
+	elif wave == 5:
+		wavee = Data. wave_content_level_1.wave_5
+	elif wave == 6:
+		wavee = Data. wave_content_level_1.wave_6
+	elif wave == 7:
+		wavee = Data. wave_content_level_1.wave_7
+	elif wave == 8:
+		wavee = Data. wave_content_level_1.wave_8
+	elif wave == 9:
+		wavee = Data. wave_content_level_1.wave_9
+	elif wave == 10:
+		wavee = Data. wave_content_level_1.wave_10
+	elif wave == 11:
+		wavee = Data. wave_content_level_1.wave_11
+	elif wave == 12:
+		wavee = Data. wave_content_level_1.wave_12
+	elif wave == 13:
+		wavee = Data. wave_content_level_1.wave_13
+	elif wave == 14:
+		wavee = Data. wave_content_level_1.wave_14
+	elif wave == 15:
+		wavee = Data. wave_content_level_1.wave_15
 	else:
 		return
 	# Spawn enemys
-	while wavee:
-		# If in array first thing is integer, so it means it's a enemy
-		if wavee[0] is int and Data. speed_variation != 0:
-			# Spawn enemy of it's type
-			if wavee[0] == 1:
+	for event in wavee:
+		if event is int and Data. speed_variation != 0:
+			if event == 1:
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
 				var enemy = first_enemy_scene.instantiate()
 				enemy. setup(follow_path)
 				enemy. name = "enemy_car_1"
 				follow_path.add_child(enemy)
-				wavee. remove_at(0)
-			elif wavee[0] == 2:
-				Data. enemys += 1
+			elif event == 2:
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
 				var enemy = second_enemy_scene.instantiate()
 				enemy. setup(follow_path)
 				enemy. name = "enemy_car_2"
 				follow_path.add_child(enemy)
-				wavee. remove_at(0)
-			elif wavee[0] == 3:
-				Data. enemys += 1
+			elif event == 3:
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
 				var enemy = fird_enemy_scene.instantiate()
 				enemy. setup(follow_path)
 				enemy. name = "enemy_car_2"
 				follow_path.add_child(enemy)
-				wavee. remove_at(0)
-			elif wavee[0] == 4:
-				Data. enemys += 1
+			elif event == 4:
 				var follow_path = PathFollow2D. new()
 				$Path2D.add_child(follow_path)
-				var enemy = first_enemy_scene.instantiate()
+				var enemy = fourth_enemy_scene.instantiate()
 				enemy. setup(follow_path)
-				enemy. name = "enemy_car_2"
+				enemy. name = "enemy_car_4"
 				follow_path.add_child(enemy)
-				wavee. remove_at(0)
-			# Change enemy type, if it missed
-			else:
-				wavee[0] = 1
-				
-				
-		# If in array first thing is float, so it means it's a couldown between spawns
-		elif wavee[0] is float and Data. speed_variation != 0:
-			if Data. speed_multiplayer != 0:
-				await get_tree().create_timer(wavee[0]/Data. speed_multiplayer).timeout
-				wavee. remove_at(0)
-			else:
-				await get_tree().create_timer(wavee[0]/previous_speed).timeout
-				wavee. remove_at(0)
-		await get_tree().create_timer(0.1).timeout
+			elif event == 5:
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = labubu_smile_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_labubu_smile"
+				follow_path.add_child(enemy)
+			elif event == 6:
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = labubu_evil_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_labubu_evil"
+				follow_path.add_child(enemy)
+			elif event == 7:
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = phone_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_phone"
+				follow_path.add_child(enemy)
+			elif event == 8:
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = laptop_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_laptop"
+				follow_path.add_child(enemy)
+			elif event == 9:
+				var follow_path = PathFollow2D. new()
+				$Path2D.add_child(follow_path)
+				var enemy = computer_boss_scene.instantiate()
+				enemy. setup(follow_path)
+				enemy. name = "enemy_computer_boss"
+				follow_path.add_child(enemy)
+		elif event is float and Data. speed_variation != 0:
+			await get_tree().create_timer(event/Data. speed_multiplayer).timeout
+		else: 
+			if Data. speed_variation == 0:
+				while Data. speed_variation == 0:
+					await get_tree().create_timer(0.1).timeout
 	
 	# Wait until all of the enemys dyed
 	while true:
-		if Data. enemys < 0:
+		var enemys = 0
+		var childrens = $Path2D.get_children()
+		for path in childrens:
+			if path. get_children():
+				enemys += 1
+			await get_tree().create_timer(0.005).timeout
+		if enemys == 0:
+			for enemy in childrens:
+				enemy. queue_free()
 			Data. wave += 1
 			Data. money += 25
 			Data. save()
@@ -149,10 +203,7 @@ func start_wave(wave):
 				previous_speed = Data. speed_variation
 				Data. speed_variation = 0
 				$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
-			break
-		else:
-			await get_tree().create_timer(0.1).timeout
-			continue
+				break
 
 	# After wave we call the function, that call this function again, but with little delay 
 	wave_couldown()
@@ -214,7 +265,7 @@ func _on_button_settings_pressed() -> void:
 	if Data. speed_variation != 0:
 		previous_speed = Data. speed_variation
 		Data. speed_variation = 0
-		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another Different Stuff/Play.png")
+		$HUD/game_need/GameControl_Buttons/Pause_Control_Button/Button.icon = load("res://art/Another_Different_Stuff/Play.png")
 
 # Return in the menu
 func _on_button_return_to_the_menu_pressed() -> void:
@@ -372,7 +423,7 @@ func sell():
 					cost = Data. towers_cost.soldier_gun
 				elif Data. placed_towers[selll] == 3:
 					cost = Data. towers_cost.soldier_sniper
-				Data.money += cost/1.7
+				Data.money += cost/1.4
 				Data. placed_towers[selll] = 0
 				selll = null
 				$HUD/game_need/Sold_Buttons.visible = false

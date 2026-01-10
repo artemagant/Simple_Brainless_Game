@@ -378,7 +378,7 @@ offset_top = -13.115
 offset_right = 41.572998
 offset_bottom = 9.885
 theme_override_fonts/font = ExtResource("6_qyddi")
-text = "75"
+text = "50"
 
 [node name="Button_To_Buy_Soldier_Gun" type="Panel" parent="HUD/game_need/Towers_Manager"]
 texture_filter = 1
@@ -437,7 +437,7 @@ offset_top = -13.115
 offset_right = 37.166
 offset_bottom = 9.885
 theme_override_fonts/font = ExtResource("6_qyddi")
-text = "300"
+text = "450"
 
 [node name="GameControl_Buttons" type="Panel" parent="HUD/game_need"]
 offset_left = 256.0

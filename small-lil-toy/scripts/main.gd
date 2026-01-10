@@ -5,7 +5,6 @@ var current_level = null
 const LEVEL_1 = preload("res://Scenes/levels/level_1.tscn")
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	Data. enemys = -1
 	Data. load_game()
 	current_level = get_node_or_null("level_root")
 	fade.visible = true
@@ -20,12 +19,13 @@ func _process(_delta: float) -> void:
 		current_level = get_node_or_null("level_root")
 		if current_level:
 			current_level.queue_free()
-		$Losse_screen.visible = true
 		await get_tree().create_timer(1.0).timeout
-		
 		Data. reset_game()
-		
-		get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+		get_tree().change_scene_to_file("res://Scenes/scrolling_bar_loose_screan.tscn")
+	if Data. wave > Data. max_wave:
+		await _fade(1.0)
+		Data. reset_game()
+		get_tree().change_scene_to_file("res://Scenes/scrolling_bar_win_screan.tscn")
 
 func load_level():
 	if current_level:

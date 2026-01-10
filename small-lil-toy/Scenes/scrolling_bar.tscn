@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://cvt37j6ocvdnb"]
+
+[ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="1_mu1ls"]
+[ext_resource type="Script" uid="uid://bbxgxapt665tg" path="res://scripts/scrolling_bar.gd" id="1_wkhqr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wkhqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkhqr"]
+size = Vector2(383, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epewh"]
+size = Vector2(342, 9)
+
+[node name="Scrolling_Bar" type="Node2D"]
+script = ExtResource("1_wkhqr")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 351.0
+offset_bottom = 197.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_left = 104.0
+offset_top = 244.0
+offset_right = 248.0
+offset_bottom = 773.0
+theme_override_fonts/font = ExtResource("1_mu1ls")
+theme_override_font_sizes/font_size = 10
+text = "You're in (Year of your birth + 5)
+You're 5 years old
+You were quietly playing with toys in the house...
+But suddenly, you hear something.
+You see a portal in the window.
+
+Your toys come to life and tell you,
+That this portal is from the future.
+From it come the toys of the future.
+And the future has been captured by a AI!
+
+You are the only person of your time,
+Who can protect your time
+From the invaders of the future.
+You accept this challenge!"
+label_settings = SubResource("LabelSettings_wkhqr")
+autowrap_mode = 3
+
+[node name="End" type="Area2D" parent="Label"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Label/End"]
+position = Vector2(94, 610)
+shape = SubResource("RectangleShape2D_wkhqr")
+
+[node name="Speed_Up" type="Button" parent="."]
+offset_right = 322.0
+offset_bottom = 193.0
+flat = true
+
+[node name="Border" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+position = Vector2(161, -5.5)
+shape = SubResource("RectangleShape2D_epewh")
+
+[connection signal="button_down" from="Speed_Up" to="." method="_on_speed_up_button_down"]
+[connection signal="button_up" from="Speed_Up" to="." method="_on_speed_up_button_up"]
+[connection signal="area_entered" from="Border" to="." method="_on_border_area_entered"]

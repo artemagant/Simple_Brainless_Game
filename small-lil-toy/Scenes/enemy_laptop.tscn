@@ -1,0 +1,69 @@
+[gd_scene load_steps=10 format=3 uid="uid://5ygvn438l1xi"]
+
+[ext_resource type="Script" uid="uid://bw3cinin6ht1a" path="res://scripts/enemy_laptop.gd" id="1_dapsg"]
+[ext_resource type="Texture2D" uid="uid://g1ddyof6sc6s" path="res://art/boom_animation/boom_1.png" id="2_c6k0o"]
+[ext_resource type="Texture2D" uid="uid://cpg57e44fj1tx" path="res://art/boom_animation/boom_2.png" id="3_wx4ww"]
+[ext_resource type="Texture2D" uid="uid://77wjrkeiucm7" path="res://art/boom_animation/boom_3.png" id="4_0ayc4"]
+[ext_resource type="Texture2D" uid="uid://clck8r87tj16d" path="res://art/boom_animation/boom_4.png" id="5_uth5j"]
+[ext_resource type="Texture2D" uid="uid://d2xo1b7ptb03a" path="res://art/boom_animation/boom_5.png" id="6_e8w5p"]
+[ext_resource type="Texture2D" uid="uid://dhrmnjc5ehok" path="res://art/Enemys/Enemy_Laptop.png" id="7_dapsg"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_v0iea"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_c6k0o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_wx4ww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0ayc4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_uth5j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_e8w5p")
+}],
+"loop": true,
+"name": &"Boom",
+"speed": 15.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_dapsg")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cvnsp"]
+size = Vector2(7.600001, 3.3105736)
+
+[node name="Enemy_Laptop" type="Area2D"]
+texture_filter = 1
+rotation = 1.5707964
+scale = Vector2(2.5, 4.833)
+collision_mask = 2
+script = ExtResource("1_dapsg")
+metadata/_edit_group_ = true
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+rotation = -1.5707964
+scale = Vector2(0.2, 0.4)
+sprite_frames = SubResource("SpriteFrames_v0iea")
+animation = &"walk"
+autoplay = "walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.19999987, 4.5221764e-09)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_cvnsp")
+one_way_collision_margin = 128.0
+debug_color = Color(0.80784315, 0.13333334, 0, 0.5058824)
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
+[connection signal="animation_looped" from="AnimatedSprite2D" to="." method="_on_animated_sprite_2d_animation_looped"]

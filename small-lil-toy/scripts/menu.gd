@@ -11,7 +11,7 @@ func _ready() -> void:
 # Change scene, then you press this button
 func _on_play_pressed() -> void:
 	await fade(1.0)
-	get_tree().call_deferred("change_scene_to_file" , "res://Scenes/main.tscn")
+	get_tree().call_deferred("change_scene_to_file" , "res://Scenes/scrolling_bar.tscn")
 
 # Create a fade effect 
 func fade(to_alfa):
@@ -23,5 +23,5 @@ func fade(to_alfa):
 func _on_button_pressed() -> void:
 	Data. reset_game()
 	await fade(1.0)
-	get_tree().call_deferred("change_scene_to_file" , "res://Scenes/main.tscn")
+	get_tree().call_deferred("change_scene_to_file" , "res://Scenes/scrolling_bar.tscn")
 	

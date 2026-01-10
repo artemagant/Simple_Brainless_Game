@@ -1,0 +1,63 @@
+[gd_scene load_steps=6 format=3 uid="uid://dp7vlfug6hsa0"]
+
+[ext_resource type="Script" uid="uid://dkxwwkejvww47" path="res://scripts/scrolling_bar_win_screan.gd" id="1_2denq"]
+[ext_resource type="FontFile" uid="uid://cb865d6wytftk" path="res://art/fonts/Square-Black.ttf" id="2_svgqa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_wkhqr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wkhqr"]
+size = Vector2(383, 25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_epewh"]
+size = Vector2(342, 9)
+
+[node name="Scrolling_Bar" type="Node2D"]
+script = ExtResource("1_2denq")
+
+[node name="Background" type="ColorRect" parent="."]
+offset_right = 351.0
+offset_bottom = 197.0
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+texture_filter = 1
+offset_left = 104.0
+offset_top = 244.0
+offset_right = 248.0
+offset_bottom = 773.0
+theme_override_fonts/font = ExtResource("2_svgqa")
+theme_override_font_sizes/font_size = 10
+text = "You did it!
+The portal closed!
+But no one noticed your success...
+Your parents punished you,
+For going out for a walk...
+Without permission...
+
+You don't know
+Whether all these heroic deeds were worth the punishment...
+In despair, you grab your time clock,
+And rewind time!"
+label_settings = SubResource("LabelSettings_wkhqr")
+autowrap_mode = 3
+
+[node name="End" type="Area2D" parent="Label"]
+position = Vector2(68, 401)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Label/End"]
+shape = SubResource("RectangleShape2D_wkhqr")
+
+[node name="Speed_Up" type="Button" parent="."]
+offset_right = 322.0
+offset_bottom = 193.0
+flat = true
+
+[node name="Border" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Border"]
+position = Vector2(161, -5.5)
+shape = SubResource("RectangleShape2D_epewh")
+
+[connection signal="button_down" from="Speed_Up" to="." method="_on_speed_up_button_down"]
+[connection signal="button_up" from="Speed_Up" to="." method="_on_speed_up_button_up"]
+[connection signal="area_entered" from="Border" to="." method="_on_border_area_entered"]

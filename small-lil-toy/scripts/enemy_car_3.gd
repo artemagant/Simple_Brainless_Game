@@ -1,10 +1,10 @@
 extends Area2D
 
-var speed = 25
+var speed = 30
 var path_follow:PathFollow2D
-var health = 20
+var health = 22
 var alive = true
-var earn = 30
+var earn = 15
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -14,17 +14,15 @@ func _process(delta: float) -> void:
 		# If it touches you will loose your hp
 		if path_follow.progress_ratio >= 0.99:
 			queue_free()
-			Data. enemys -= 1
-			
-			Data. player_health -= health
+			Data. player_health -= 1
 			Data. money += Data. money_multiplayer * earn / 2
 		# Change size and speed, if it goes vertical 
 		if (path_follow.progress_ratio >= 0.0713 and path_follow.progress_ratio <= 0.1548) or (path_follow.progress_ratio >= 0.2767 and path_follow.progress_ratio <= 0.3121) or (path_follow.progress_ratio >= 0.3933 and path_follow.progress_ratio <= 0.4288) or (path_follow.progress_ratio >= 0.5304 and path_follow.progress_ratio <= 0.5784) or (path_follow.progress_ratio >= 0.741 and path_follow.progress_ratio <= 0.812) or (path_follow.progress_ratio >= 0.9344 and path_follow.progress_ratio <= 0.97):
-			speed = 13
+			speed = 15
 			scale.x = 4.0
 			scale.y = 2.5
 		else:
-			speed = 25
+			speed = 30
 			scale.x = 2.5
 			scale.y = 4.0
 
@@ -46,7 +44,6 @@ func _on_area_entered(area: Area2D) -> void:
 	if health <= 0:
 		$AnimatedSprite2D.animation = "Boom"
 		alive = false
-		Data. enemys -= 1
 		Data. money += Data. money_multiplayer * earn 
 		
 		call_deferred("disable_collision")

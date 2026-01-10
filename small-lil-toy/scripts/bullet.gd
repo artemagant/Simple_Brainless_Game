@@ -4,7 +4,7 @@ extends Area2D
 # idk wthitt, but I trust the guide guy
 var direction: Vector2
 var speed = 150
-var damage = 1
+var damage = 1.8
 
 @warning_ignore("unused_parameter")
 func setup(pos: Vector2, dir: float, bullet_enum: Data. Bullet):
